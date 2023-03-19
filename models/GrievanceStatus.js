@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const grievanceSchema = new mongoose.Schema(
   {
@@ -14,5 +14,4 @@ const grievanceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.Grievance ||
-  mongoose.model("Grievance", grievanceSchema);
+module.exports = mongoose.model("Grievance", grievanceSchema);

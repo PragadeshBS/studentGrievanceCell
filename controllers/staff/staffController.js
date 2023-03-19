@@ -1,4 +1,4 @@
-import Staff from "@/models/Staff";
+const Staff = require("../models/Staff");
 
 const getStaff = async (req, res) => {
   const staff = await Staff.find({});
