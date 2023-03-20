@@ -14,4 +14,4 @@ const grievanceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Grievance", grievanceSchema);
+module.exports = mongoose.model("GrievanceStatus", grievanceSchema);
