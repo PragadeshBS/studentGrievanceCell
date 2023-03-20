@@ -2,6 +2,7 @@ const Staff = require("../../models/Staff");
 
 const login = async (req, res) => {
   const { staffId, password } = req.body;
+  console.log(staffId, password);
   try {
     const staff = await Staff.findOne({ staffId });
     if (!staff) {
