@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "concurrently \"node server.js\" \"cd frontend && npm run dev\"",
-    "build": "cd frontend && rm -rf node_modules && npm install && npm run build"
+    "build": "cd frontend && npm install && npm install vite && npm run build"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
