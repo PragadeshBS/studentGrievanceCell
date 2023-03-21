@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
-export default defineConfig({
+const defineConfig = {
   plugins: [react()],
   server: {
     proxy: {
@@ -28,4 +28,6 @@ export default defineConfig({
       },
     },
   },
-});
+};
+
+export default defineConfig;
