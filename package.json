@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"node server.js\" \"cd frontend && npm run dev\"",
-    "build": "cd frontend && npm install && npx run build"
+    "dev": "concurrently \"node server.js\" \"cd frontend && npm run dev\"",
+    "build": "cd frontend && npm install && npx run build",
+    "start": "node server.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
