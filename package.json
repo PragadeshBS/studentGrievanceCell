@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node server.js",
+    "start": "concurrently \"node server.js\" \"cd frontend && npm run dev\"",
     "build": "cd frontend && npm install && npm run build"
   },
   "dependencies": {
@@ -12,5 +12,8 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^7.0.2"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
   }
 }
