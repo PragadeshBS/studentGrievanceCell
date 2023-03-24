@@ -1,7 +1,7 @@
 const {
   addGrievance,
   getGrievances,
-} = require("../controllers/grievance/grievanceController");
+} = require("../controllers/grievance/grievance");
 
 const router = require("express").Router();
 

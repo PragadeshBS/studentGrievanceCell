@@ -27,6 +27,12 @@ app.use("/api/staff", staffRouter);
 app.use("/api/student", studentRouter);
 app.use("/api/grievance", grienvaceRouter);
 
+// development mode routes
+if (process.env.NODE_ENV === "development") {
+  const devRouter = require("./routes/dev");
+  app.use("/api/dev", devRouter);
+}
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("frontend/dist"));
   const path = require("path");
