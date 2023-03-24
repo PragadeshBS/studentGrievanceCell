@@ -1,5 +1,6 @@
 const GrievanceType = require("../../models/GrievanceType");
 
+// development only
 const addGrievanceType = async (req, res) => {
   const { name, description } = req.body;
   const newGrievanceType = await GrievanceType.create({

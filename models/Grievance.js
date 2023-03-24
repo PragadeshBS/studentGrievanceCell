@@ -21,6 +21,7 @@ const grievanceSchema = new mongoose.Schema(
     grievanceStatus: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "GrievanceStatus",
+      default: "6418546972fb2e27a95fac25",
     },
     staffAssigned: {
       type: mongoose.Schema.Types.ObjectId,

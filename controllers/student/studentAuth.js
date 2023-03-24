@@ -1,4 +1,5 @@
 const Student = require("../../models/Student");
+const hashPassword = require("../../utils/hashPassword");
 
 const login = async (req, res) => {
   const { registerNo, password } = req.body;
@@ -16,6 +17,35 @@ const login = async (req, res) => {
   }
 };
 
+const register = async (req, res) => {
+  try {
+    const { registerNo, password, name, email, department, phone } = req.body;
+    const hasedPassword = await hashPassword(password);
+    const student = await Student.create({
+      name,
+      email,
+      phone,
+      registerNo,
+      department,
+      password: hasedPassword,
+    });
+    res.status(201).json({
+      success: true,
+      message: "Student registered successfully",
+      data: {
+        student,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
 module.exports = {
   login,
+  register,
 };

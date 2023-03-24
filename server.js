@@ -9,6 +9,7 @@ const indexRouter = require("./routes/index");
 const staffRouter = require("./routes/staff");
 const studentRouter = require("./routes/student");
 const grienvaceRouter = require("./routes/grievance");
+const departmentRouter = require("./routes/department");
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api", indexRouter);
 app.use("/api/staff", staffRouter);
 app.use("/api/student", studentRouter);
 app.use("/api/grievance", grienvaceRouter);
+app.use("/api/department", departmentRouter);
 
 // development mode routes
 if (process.env.NODE_ENV === "development") {

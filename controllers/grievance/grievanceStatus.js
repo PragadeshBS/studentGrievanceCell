@@ -1,5 +1,6 @@
 const GrievanceStatus = require("../../models/GrievanceStatus");
 
+// development only
 const addGrievanceStatus = async (req, res) => {
   const { title, description } = req.body;
   const newGrievanceStatus = await GrievanceStatus.create({
