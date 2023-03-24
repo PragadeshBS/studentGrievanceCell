@@ -1,20 +1,46 @@
 const Staff = require("../../models/Staff");
-const { hashPassword } = require("../../utils/hashPassword");
+const { hashPassword, verifyPassword } = require("../../utils/hashPassword");
+const createToken = require("../../utils/createToken");
 
 const login = async (req, res) => {
   const { staffId, password } = req.body;
-  console.log(staffId, password);
   try {
     const staff = await Staff.findOne({ staffId });
     if (!staff) {
-      return res.status(404).json({ message: "Staff not found" });
+      return res.status(400).json({
+        success: false,
+        message: "Staff not found",
+      });
     }
-    if (staff.password !== password) {
-      return res.status(400).json({ message: "Invalid credentials" });
+    const isPasswordCorrect = await verifyPassword(password, staff.password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid credentials",
+      });
     }
-    return res.json({ staff });
+    res.cookie(
+      "token",
+      await createToken({ userId: staff.id, userType: "Staff" }),
+      {
+        maxAge: 1000 * 60 * 60 * 24 * 14,
+        httpOnly: true,
+        sameSite: "strict",
+      }
+    );
+    return res.json({
+      success: true,
+      message: "Staff logged in successfully",
+      data: {
+        staff,
+      },
+    });
   } catch (err) {
     console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
   }
 };
 
@@ -23,7 +49,7 @@ const register = async (req, res) => {
     const { staffId, password, name, email, department, phone, designation } =
       req.body;
     const hasedPassword = await hashPassword(password);
-    const staff = await Student.create({
+    const staff = await Staff.create({
       name,
       email,
       phone,
@@ -32,6 +58,15 @@ const register = async (req, res) => {
       password: hasedPassword,
       designation,
     });
+    res.cookie(
+      "token",
+      await createToken({ userId: staff.id, userType: "Staff" }),
+      {
+        maxAge: 1000 * 60 * 60 * 24 * 14,
+        httpOnly: true,
+        sameSite: "strict",
+      }
+    );
     res.status(201).json({
       success: true,
       message: "Staff registered successfully",

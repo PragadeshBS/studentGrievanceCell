@@ -1,19 +1,46 @@
 const Student = require("../../models/Student");
-const hashPassword = require("../../utils/hashPassword");
+const createToken = require("../../utils/createToken");
+const { hashPassword, verifyPassword } = require("../../utils/hashPassword");
 
 const login = async (req, res) => {
   const { registerNo, password } = req.body;
   try {
     const student = await Student.findOne({ registerNo });
     if (!student) {
-      return res.status(404).json({ message: "Student not found" });
+      return res.status(400).json({
+        success: false,
+        message: "Student not found",
+      });
     }
-    if (student.password !== password) {
-      return res.status(400).json({ message: "Invalid credentials" });
+    const isPasswordCorrect = await verifyPassword(password, student.password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid credentials",
+      });
     }
-    return res.json({ student });
+    res.cookie(
+      "token",
+      await createToken({ userId: student.id, userType: "Student" }),
+      {
+        maxAge: 1000 * 60 * 60 * 24 * 14,
+        httpOnly: true,
+        sameSite: "strict",
+      }
+    );
+    return res.json({
+      success: true,
+      message: "Student logged in successfully",
+      data: {
+        student,
+      },
+    });
   } catch (err) {
     console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
   }
 };
 
@@ -29,6 +56,15 @@ const register = async (req, res) => {
       department,
       password: hasedPassword,
     });
+    res.cookie(
+      "token",
+      await createToken({ userId: student.id, userType: "Student" }),
+      {
+        maxAge: 1000 * 60 * 60 * 24 * 14,
+        httpOnly: true,
+        sameSite: "strict",
+      }
+    );
     res.status(201).json({
       success: true,
       message: "Student registered successfully",

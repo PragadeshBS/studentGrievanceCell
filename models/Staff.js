@@ -9,17 +9,21 @@ const staffSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     phone: {
       type: String,
       required: true,
+      unique: true,
     },
     staffId: {
       type: String,
       required: true,
+      unique: true,
     },
     department: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Department",
       required: true,
     },
     password: {
