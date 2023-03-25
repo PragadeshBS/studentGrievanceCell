@@ -9,7 +9,7 @@ const login = async (req, res) => {
     if (!student) {
       return res.status(400).json({
         success: false,
-        message: "Student not found",
+        message: "Invalid credentials",
       });
     }
     const isPasswordCorrect = await verifyPassword(password, student.password);
@@ -31,9 +31,6 @@ const login = async (req, res) => {
     return res.json({
       success: true,
       message: "Student logged in successfully",
-      data: {
-        student,
-      },
     });
   } catch (err) {
     console.log(err);

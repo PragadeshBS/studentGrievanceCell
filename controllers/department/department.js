@@ -16,7 +16,7 @@ const addDepartment = async (req, res) => {
 
 const getDepartments = async (req, res) => {
   try {
-    const departments = await Department.find();
+    const departments = await Department.find().sort({ name: 1 });
     res.status(200).json({
       success: true,
       message: "Departments fetched successfully",

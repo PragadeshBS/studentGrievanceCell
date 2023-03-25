@@ -9,7 +9,7 @@ const login = async (req, res) => {
     if (!staff) {
       return res.status(400).json({
         success: false,
-        message: "Staff not found",
+        message: "Invalid credentials",
       });
     }
     const isPasswordCorrect = await verifyPassword(password, staff.password);
@@ -31,9 +31,6 @@ const login = async (req, res) => {
     return res.json({
       success: true,
       message: "Staff logged in successfully",
-      data: {
-        staff,
-      },
     });
   } catch (err) {
     console.log(err);

@@ -1,14 +1,16 @@
-import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
 
 function App() {
   return (
     <div className="App">
-      <div>
-        <Link to={"/login/staff"}>Staff Login</Link>
-      </div>
-      <div>
-        <Link to={"/login/student"}>Student Login</Link>
-      </div>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   );
 }
