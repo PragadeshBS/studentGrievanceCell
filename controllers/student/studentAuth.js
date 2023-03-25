@@ -1,5 +1,5 @@
 const Student = require("../../models/Student");
-const createToken = require("../../utils/createToken");
+const { createToken } = require("../../utils/userToken");
 const { hashPassword, verifyPassword } = require("../../utils/hashPassword");
 
 const login = async (req, res) => {
@@ -21,16 +21,19 @@ const login = async (req, res) => {
     }
     res.cookie(
       "token",
-      await createToken({ userId: student.id, userType: "Student" }),
+      await createToken({ userId: student.id, userType: "student" }),
       {
         maxAge: 1000 * 60 * 60 * 24 * 14,
         httpOnly: true,
         sameSite: "strict",
       }
     );
-    return res.json({
+    // remove password from response
+    student.password = undefined;
+    return res.status(200).json({
       success: true,
       message: "Student logged in successfully",
+      data: student,
     });
   } catch (err) {
     console.log(err);
@@ -55,13 +58,14 @@ const register = async (req, res) => {
     });
     res.cookie(
       "token",
-      await createToken({ userId: student.id, userType: "Student" }),
+      await createToken({ userId: student.id, userType: "student" }),
       {
         maxAge: 1000 * 60 * 60 * 24 * 14,
         httpOnly: true,
         sameSite: "strict",
       }
     );
+    student.password = undefined;
     res.status(201).json({
       success: true,
       message: "Student registered successfully",

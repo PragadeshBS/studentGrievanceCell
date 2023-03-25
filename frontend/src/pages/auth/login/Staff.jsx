@@ -1,8 +1,12 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
+import { useAuth, useAuthDispatch } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const StaffLogin = () => {
+  const auth = useAuth();
+  const authDispatch = useAuthDispatch();
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const {
@@ -10,14 +14,22 @@ const StaffLogin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = ({ staffId, password }) => {
     setLoading(true);
     axios
       .post("/api/staff/login", { staffId, password })
-      .then(() => {
+      .then((res) => {
+        console.log(res.data.data);
+        authDispatch({
+          user: res.data.data,
+          userType: "staff",
+          type: "LOGIN",
+        });
         setErrorMsg("");
         setLoading(false);
+        navigate("/");
       })
       .catch((err) => {
         setLoading(false);
@@ -27,6 +39,7 @@ const StaffLogin = () => {
 
   return (
     <div>
+      <button onClick={() => console.log(auth)}>view auth state</button>
       <h1>Staff Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>

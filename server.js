@@ -10,6 +10,7 @@ const staffRouter = require("./routes/staff");
 const studentRouter = require("./routes/student");
 const grienvaceRouter = require("./routes/grievance");
 const departmentRouter = require("./routes/department");
+const authRouter = require("./routes/auth");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api/staff", staffRouter);
 app.use("/api/student", studentRouter);
 app.use("/api/grievance", grienvaceRouter);
 app.use("/api/department", departmentRouter);
+app.use("/api/auth", authRouter);
 
 // development mode routes
 if (process.env.NODE_ENV === "development") {
