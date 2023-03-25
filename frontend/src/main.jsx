@@ -5,13 +5,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import StaffLogin from "./pages/auth/login/Staff";
 import StudentLogin from "./pages/auth/login/Student";
-import SubmitGrievance from "./pages/user/grievance/SubmitGrievance";
+import SubmitGrievance from "./pages/student/grievance/SubmitGrievance";
 import ErrorPage from "./pages/Error";
 import StaffRegister from "./pages/auth/register/Staff";
 import StudentRegister from "./pages/auth/register/Student";
 import HomePage from "./pages/Home";
 import Logout from "./pages/auth/Logout";
-import Protect from "./pages/user/Protect";
+import StudentProtect from "./pages/student/StudentProtect";
+import ViewGrievances from "./pages/student/grievance/ViewGrievances";
+import StaffProtect from "./pages/staff/StaffProtect";
+import ViewAssignedGrievances from "./pages/staff/grievances/ViewAssigned";
 
 const router = createBrowserRouter([
   {
@@ -50,13 +53,29 @@ const router = createBrowserRouter([
         element: <Logout />,
       },
       {
-        // parent route for all protected routes
-        path: "u",
-        element: <Protect />,
+        // parent route for all protected routes of students
+        path: "student",
+        element: <StudentProtect />,
         children: [
           {
-            path: "grievance/create",
-            element: <SubmitGrievance />,
+            path: "grievances",
+            children: [
+              { path: "view", element: <ViewGrievances /> },
+              { path: "create", element: <SubmitGrievance /> },
+            ],
+          },
+        ],
+      },
+      {
+        // parent route for all protected routes of staff
+        path: "staff",
+        element: <StaffProtect />,
+        children: [
+          {
+            path: "grievances",
+            children: [
+              { path: "view/assigned", element: <ViewAssignedGrievances /> },
+            ],
           },
         ],
       },
