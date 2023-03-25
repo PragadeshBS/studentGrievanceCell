@@ -5,7 +5,6 @@ import { useAuth, useAuthDispatch } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const StaffLogin = () => {
-  const auth = useAuth();
   const authDispatch = useAuthDispatch();
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,7 +38,6 @@ const StaffLogin = () => {
 
   return (
     <div>
-      <button onClick={() => console.log(auth)}>view auth state</button>
       <h1>Staff Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>

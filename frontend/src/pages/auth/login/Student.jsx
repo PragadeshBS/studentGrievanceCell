@@ -1,8 +1,12 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuthDispatch } from "../../../context/AuthContext";
 
 const StudentLogin = () => {
+  const authDispatch = useAuthDispatch();
+  const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const {
@@ -14,9 +18,15 @@ const StudentLogin = () => {
     setLoading(true);
     axios
       .post("/api/student/login", { registerNo, password })
-      .then(() => {
+      .then((res) => {
         setErrorMsg("");
         setLoading(false);
+        authDispatch({
+          user: res.data.data,
+          userType: "student",
+          type: "LOGIN",
+        });
+        navigate("/");
       })
       .catch((err) => {
         setLoading(false);

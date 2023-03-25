@@ -15,6 +15,17 @@ const addGrievanceType = async (req, res) => {
   });
 };
 
+const getGrievanceTypes = async (req, res) => {
+  const grievanceTypes = await GrievanceType.find();
+  res.status(200).json({
+    status: "success",
+    data: {
+      grievanceTypes,
+    },
+  });
+};
+
 module.exports = {
   addGrievanceType,
+  getGrievanceTypes,
 };

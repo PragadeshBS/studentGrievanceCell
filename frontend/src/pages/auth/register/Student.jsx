@@ -1,8 +1,12 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuthDispatch } from "../../../context/AuthContext";
 
 const StudentRegister = () => {
+  const authDispatch = useAuthDispatch();
+  const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [departments, setDepartments] = useState([]);
@@ -16,14 +20,18 @@ const StudentRegister = () => {
       setErrorMsg("Passwords do not match");
       return;
     }
-    console.log(studentDetails);
     setErrorMsg("");
     setLoading(true);
     axios
       .post("/api/student/register", studentDetails)
-      .then(() => {
-        setErrorMsg("");
+      .then((res) => {
         setLoading(false);
+        authDispatch({
+          user: res.data.data,
+          userType: "student",
+          type: "LOGIN",
+        });
+        navigate("/");
       })
       .catch((err) => {
         setLoading(false);

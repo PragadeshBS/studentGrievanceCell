@@ -6,15 +6,12 @@ const Staff = require("../../models/Staff");
 const addGrievance = async (req, res) => {
   try {
     const { title, description, grievanceType, staffAssigned } = req.body;
-    const { studentRegisterNo } = req.user.studentRegisterNo;
-    const student = await Student.findOne({ registerNo: studentRegisterNo });
-    const staff = await Staff.findOne({ staffAssigned });
     const grievance = await Grievance.create({
       title,
       description,
       grievanceType,
-      student: student._id,
-      staffAssigned: staff._id,
+      student: req.user.userInfo._id,
+      staffAssigned,
     });
     res.status(201).json({
       success: true,

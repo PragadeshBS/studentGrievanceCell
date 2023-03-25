@@ -5,13 +5,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import StaffLogin from "./pages/auth/login/Staff";
 import StudentLogin from "./pages/auth/login/Student";
-import SubmitGrievance from "./pages/grievance/SubmitGrievance";
-import ViewGrievance from "./pages/grievance/ViewGrievance";
+import SubmitGrievance from "./pages/user/grievance/SubmitGrievance";
 import ErrorPage from "./pages/Error";
 import StaffRegister from "./pages/auth/register/Staff";
 import StudentRegister from "./pages/auth/register/Student";
 import HomePage from "./pages/Home";
 import Logout from "./pages/auth/Logout";
+import Protect from "./pages/user/Protect";
 
 const router = createBrowserRouter([
   {
@@ -50,12 +50,15 @@ const router = createBrowserRouter([
         element: <Logout />,
       },
       {
-        path: "/grievance/create",
-        element: <SubmitGrievance />,
-      },
-      {
-        path: "/grievance",
-        element: <ViewGrievance />,
+        // parent route for all protected routes
+        path: "u",
+        element: <Protect />,
+        children: [
+          {
+            path: "grievance/create",
+            element: <SubmitGrievance />,
+          },
+        ],
       },
     ],
     errorElement: <ErrorPage />,

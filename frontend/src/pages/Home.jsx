@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth, useAuthDispatch } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 const HomePage = () => {
   const auth = useAuth();
-  const authDispatch = useAuthDispatch();
+  useEffect(() => {
+    console.log("Auth state changed", auth);
+  }, [auth]);
   return (
     <div>
       <h1>Home Page</h1>
@@ -12,30 +15,7 @@ const HomePage = () => {
           console.log(auth);
         }}
       >
-        View auth state
-      </button>
-      <button
-        onClick={() => {
-          authDispatch({ type: "LOGOUT" });
-        }}
-      >
-        Logout
-      </button>
-      <button
-        onClick={() => {
-          authDispatch({
-            type: "LOGIN",
-            payload: {
-              user: {
-                email: "test",
-                name: "test",
-              },
-              userType: "staff",
-            },
-          });
-        }}
-      >
-        Login
+        Log auth state
       </button>
       <div>
         {!auth.isAuthenticated && "Not Authenticated"}
@@ -58,7 +38,7 @@ const HomePage = () => {
         <Link to="/auth/register/student">Student Register</Link>
       </div>
       <div>
-        <Link to="/grievance/create">Submit Grievance</Link>
+        <Link to="/u/grievance/create">Submit Grievance</Link>
       </div>
       <div>
         <Link to="/auth/logout">Logout</Link>

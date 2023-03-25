@@ -1,8 +1,12 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuthDispatch } from "../../../context/AuthContext";
 
 const StaffRegister = () => {
+  const authDispatch = useAuthDispatch();
+  const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [departments, setDepartments] = useState([]);
@@ -20,9 +24,15 @@ const StaffRegister = () => {
     setLoading(true);
     axios
       .post("/api/staff/register", staffDetails)
-      .then(() => {
+      .then((res) => {
         setErrorMsg("");
         setLoading(false);
+        authDispatch({
+          user: res.data.data,
+          userType: "staff",
+          type: "LOGIN",
+        });
+        navigate("/");
       })
       .catch((err) => {
         setLoading(false);
@@ -67,13 +77,21 @@ const StaffRegister = () => {
           {errors.name && <p role="alert">{errors.name?.message}</p>}
         </div>
         <div>
-          <select {...register("department")}>
+          <select
+            {...register("department", {
+              required: "Department is required",
+            })}
+          >
+            <option value="">Select Department</option>
             {departments.map((department) => (
               <option key={department._id} value={department._id}>
                 {department.name}
               </option>
             ))}
           </select>
+          {errors.department && (
+            <p role="alert">{errors.department?.message}</p>
+          )}
         </div>
         <div>
           <input
