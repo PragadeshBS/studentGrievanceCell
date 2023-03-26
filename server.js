@@ -5,6 +5,15 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
+// import all the models
+require("./models/Student");
+require("./models/Staff");
+require("./models/Grievance");
+require("./models/GrievanceType");
+require("./models/GrievanceStatus");
+require("./models/Department");
+require("./models/Comment");
+
 const indexRouter = require("./routes/index");
 const staffRouter = require("./routes/staff");
 const studentRouter = require("./routes/student");
