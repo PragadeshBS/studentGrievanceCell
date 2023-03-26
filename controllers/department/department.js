@@ -8,9 +8,7 @@ const addDepartment = async (req, res) => {
   });
   res.status(201).json({
     status: "success",
-    data: {
-      newDepartment,
-    },
+    newDepartment,
   });
 };
 
@@ -20,9 +18,7 @@ const getDepartments = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Departments fetched successfully",
-      data: {
-        departments,
-      },
+      departments,
     });
   } catch (err) {
     console.log(err);

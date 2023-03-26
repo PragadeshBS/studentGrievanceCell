@@ -1,6 +1,4 @@
 const Grievance = require("../../models/Grievance");
-const Student = require("../../models/Student");
-const Staff = require("../../models/Staff");
 
 // create a new grievance
 const addGrievance = async (req, res) => {
@@ -16,9 +14,7 @@ const addGrievance = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Grievance created successfully",
-      data: {
-        grievance,
-      },
+      grievance,
     });
   } catch (err) {
     console.log(err);
@@ -35,15 +31,14 @@ const getStudentGrievances = async (req, res) => {
     const grievances = await Grievance.find({
       student: req.user.userInfo._id,
     })
-      .populate("grievanceType", "name")
       .populate("grievanceStatus", "title")
-      .populate("staffAssigned", ["name", "designation"]);
+      .populate("grievanceType", "name")
+      .populate("staffAssigned", ["name", "designation"])
+      .populate("student", ["name", "registerNo"]);
     res.status(200).json({
       success: true,
       message: "Grievances fetched successfully",
-      data: {
-        grievances,
-      },
+      grievances,
     });
   } catch (err) {
     console.log(err);
@@ -60,15 +55,45 @@ const getStaffGrievances = async (req, res) => {
     const grievances = await Grievance.find({
       staffAssigned: req.user.userInfo._id,
     })
-      .populate("grievanceType", "name")
       .populate("grievanceStatus", "title")
+      .populate("grievanceType", "name")
+      .populate("staffAssigned", ["name", "designation"])
       .populate("student", ["name", "registerNo"]);
     res.status(200).json({
       success: true,
       message: "Grievances fetched successfully",
-      data: {
-        grievances,
-      },
+      grievances,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+// get details of a grievance
+const getGrievance = async (req, res) => {
+  try {
+    const grievanceId = req.params.grievanceId;
+    const grievance = await Grievance.findOne({
+      _id: grievanceId,
+    })
+      .populate("grievanceType", "name")
+      .populate("grievanceStatus", "title")
+      .populate("student", ["name", "registerNo"])
+      .populate("staffAssigned", ["name", "designation"]);
+    if (!grievance) {
+      return res.status(404).json({
+        success: false,
+        message: "Grievance not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Grievance fetched successfully",
+      grievance,
     });
   } catch (err) {
     console.log(err);
@@ -83,4 +108,5 @@ module.exports = {
   addGrievance,
   getStudentGrievances,
   getStaffGrievances,
+  getGrievance,
 };

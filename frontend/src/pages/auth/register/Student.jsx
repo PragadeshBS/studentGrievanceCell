@@ -27,7 +27,7 @@ const StudentRegister = () => {
       .then((res) => {
         setLoading(false);
         authDispatch({
-          user: res.data.data,
+          user: res.data.student,
           userType: "student",
           type: "LOGIN",
         });
@@ -42,7 +42,7 @@ const StudentRegister = () => {
     axios
       .get("/api/department")
       .then((res) => {
-        setDepartments(res.data.data.departments);
+        setDepartments(res.data.departments);
       })
       .catch((err) => {
         console.log(err);

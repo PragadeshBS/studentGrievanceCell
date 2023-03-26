@@ -8,9 +8,7 @@ const getStaffs = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "List of staffs",
-      data: {
-        staffs,
-      },
+      staffs,
     });
   } catch (err) {
     console.log(err);

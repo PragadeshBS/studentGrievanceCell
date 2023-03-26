@@ -14,12 +14,12 @@ require("./models/GrievanceStatus");
 require("./models/Department");
 require("./models/Comment");
 
-const indexRouter = require("./routes/index");
 const staffRouter = require("./routes/staff");
 const studentRouter = require("./routes/student");
 const grienvaceRouter = require("./routes/grievance");
 const departmentRouter = require("./routes/department");
 const authRouter = require("./routes/auth");
+const commentRouter = require("./routes/comment");
 
 const app = express();
 
@@ -33,12 +33,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api", indexRouter);
 app.use("/api/staff", staffRouter);
 app.use("/api/student", studentRouter);
 app.use("/api/grievance", grienvaceRouter);
 app.use("/api/department", departmentRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/comment", commentRouter);
 
 // development mode routes
 if (process.env.NODE_ENV === "development") {

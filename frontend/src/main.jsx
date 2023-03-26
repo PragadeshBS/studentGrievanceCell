@@ -15,6 +15,8 @@ import StudentProtect from "./pages/student/StudentProtect";
 import ViewGrievances from "./pages/student/grievance/ViewGrievances";
 import StaffProtect from "./pages/staff/StaffProtect";
 import ViewAssignedGrievances from "./pages/staff/grievances/ViewAssigned";
+import ViewGrievanceDetailsStaff from "./pages/staff/grievances/ViewGrievanceDetails";
+import ViewGrievanceDetailsStudent from "./pages/student/grievance/ViewGrievanceDetails";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +63,10 @@ const router = createBrowserRouter([
             path: "grievances",
             children: [
               { path: "view", element: <ViewGrievances /> },
+              {
+                path: "view/:grievanceId",
+                element: <ViewGrievanceDetailsStudent />,
+              },
               { path: "create", element: <SubmitGrievance /> },
             ],
           },
@@ -75,6 +81,10 @@ const router = createBrowserRouter([
             path: "grievances",
             children: [
               { path: "view/assigned", element: <ViewAssignedGrievances /> },
+              {
+                path: "view/assigned/:grievanceId",
+                element: <ViewGrievanceDetailsStaff />,
+              },
             ],
           },
         ],

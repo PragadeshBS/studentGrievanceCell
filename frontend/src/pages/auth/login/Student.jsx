@@ -22,7 +22,7 @@ const StudentLogin = () => {
         setErrorMsg("");
         setLoading(false);
         authDispatch({
-          user: res.data.data,
+          user: res.data.student,
           userType: "student",
           type: "LOGIN",
         });

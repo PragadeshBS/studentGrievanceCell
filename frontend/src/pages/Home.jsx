@@ -1,12 +1,8 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const HomePage = () => {
   const auth = useAuth();
-  useEffect(() => {
-    console.log("Auth state changed", auth);
-  }, [auth]);
   return (
     <div>
       <h1>Home Page</h1>

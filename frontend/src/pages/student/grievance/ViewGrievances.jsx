@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const ViewGrievances = () => {
   const [grievances, setGrievances] = useState([]);
   useEffect(() => {
     axios.get("/api/grievance/student").then((res) => {
-      setGrievances(res.data.data.grievances);
-      console.log(res.data.data.grievances);
+      setGrievances(res.data.grievances);
+      console.log(res.data.grievances);
     });
   }, []);
   return (
@@ -19,8 +20,10 @@ const ViewGrievances = () => {
               <li key={grievance._id}>
                 <div>
                   <div>
-                    <span>Subject: </span>
-                    <span>{grievance.title}</span>
+                    <Link to={`/student/grievances/view/${grievance._id}`}>
+                      <span>Subject: </span>
+                      <span>{grievance.title}</span>
+                    </Link>
                   </div>
                   <div>
                     <span>Category: </span>

@@ -24,10 +24,10 @@ const SubmitGrievance = () => {
   };
   useEffect(() => {
     axios.get("/api/grievance/types").then((res) => {
-      setGrievanceTypes(res.data.data.grievanceTypes);
+      setGrievanceTypes(res.data.grievanceTypes);
     });
     axios.get("/api/staff").then((res) => {
-      setDeptStaffs(res.data.data.staffs);
+      setDeptStaffs(res.data.staffs);
     });
   }, []);
   return (

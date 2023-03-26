@@ -14,8 +14,8 @@ function App() {
       .then((res) => {
         authDispatch({
           type: "LOGIN",
-          userType: res.data.data.user.userType,
-          user: res.data.data.user.userInfo,
+          userType: res.data.user.userType,
+          user: res.data.user.userInfo,
         });
         setLoading(false);
       })

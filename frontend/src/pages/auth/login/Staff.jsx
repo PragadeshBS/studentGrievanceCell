@@ -20,9 +20,8 @@ const StaffLogin = () => {
     axios
       .post("/api/staff/login", { staffId, password })
       .then((res) => {
-        console.log(res.data.data);
         authDispatch({
-          user: res.data.data,
+          user: res.data.staff,
           userType: "staff",
           type: "LOGIN",
         });

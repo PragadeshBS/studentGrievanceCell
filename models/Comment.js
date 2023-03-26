@@ -6,13 +6,10 @@ const commentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    student: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Student",
-    },
-    staff: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Staff",
+    authorType: {
+      type: String,
+      required: true,
+      enum: ["staff", "student"],
     },
     grievance: {
       type: mongoose.Schema.Types.ObjectId,

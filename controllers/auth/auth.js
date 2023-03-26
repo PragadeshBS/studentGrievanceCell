@@ -2,13 +2,13 @@ const userLoggedIn = async (req, res) => {
   try {
     res.status(200).json({
       success: true,
-      data: { user: req.user },
+      user: req.user,
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({
       success: false,
-      error: "Server Error",
+      message: "Server Error",
     });
   }
 };
@@ -23,7 +23,7 @@ const logout = async (req, res) => {
     console.error(err);
     res.status(500).json({
       success: false,
-      error: "Server Error",
+      message: "Server Error",
     });
   }
 };

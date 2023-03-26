@@ -19,21 +19,17 @@ const login = async (req, res) => {
         message: "Invalid credentials",
       });
     }
-    res.cookie(
-      "token",
-      await createToken({ userId: staff.id, userType: "staff" }),
-      {
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-        httpOnly: true,
-        sameSite: "strict",
-      }
-    );
+    res.cookie("token", createToken({ userId: staff.id, userType: "staff" }), {
+      maxAge: 1000 * 60 * 60 * 24 * 14,
+      httpOnly: true,
+      sameSite: "strict",
+    });
     // remove password from response
     staff.password = undefined;
     return res.status(200).json({
       success: true,
       message: "Staff logged in successfully",
-      data: staff,
+      staff,
     });
   } catch (err) {
     console.log(err);
@@ -72,7 +68,7 @@ const register = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Staff registered successfully",
-      data: staff,
+      staff,
     });
   } catch (err) {
     console.log(err);
