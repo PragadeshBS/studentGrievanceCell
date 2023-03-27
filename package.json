@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"node server.js\" \"cd frontend && npm run dev\"",
+    "dev": "concurrently \"nodemon server.js\" \"cd frontend && npm run dev\"",
     "build": "cd frontend && npm install && npm run build",
     "start": "node server.js"
   },
