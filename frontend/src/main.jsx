@@ -17,7 +17,8 @@ import StaffProtect from "./pages/staff/StaffProtect";
 import ViewAssignedGrievances from "./pages/staff/grievances/ViewAssigned";
 import ViewGrievanceDetailsStaff from "./pages/staff/grievances/ViewGrievanceDetails";
 import ViewGrievanceDetailsStudent from "./pages/student/grievance/ViewGrievanceDetails";
-import Profile from "./pages/student/Profile";
+import StudentProfile from "./pages/student/Profile";
+import StaffProfile from "./pages/staff/Profile";
 
 const router = createBrowserRouter([
   {
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "profile",
-            element: <Profile />,
+            element: <StudentProfile />,
           },
           {
             path: "grievances",
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
         path: "staff",
         element: <StaffProtect />,
         children: [
+          {
+            path: "profile",
+            element: <StaffProfile />,
+          },
           {
             path: "grievances",
             children: [

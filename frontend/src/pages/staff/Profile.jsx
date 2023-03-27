@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import axios from "axios";
 
-const StudentProfile = () => {
+const StaffProfile = () => {
   useEffect(() => {
     axios
-      .get("/api/student/profile")
+      .get("/api/staff/profile")
       .then((res) => {
         console.log(res.data);
       })
@@ -14,4 +14,4 @@ const StudentProfile = () => {
   }, []);
   return <div>Profile</div>;
 };
-export default StudentProfile;
+export default StaffProfile;

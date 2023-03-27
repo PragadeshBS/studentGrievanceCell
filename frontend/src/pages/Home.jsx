@@ -44,11 +44,17 @@ const HomePage = () => {
       <div>
         <Link to="/student/grievances/view">View submitted Grievances</Link>
       </div>
+      <div>
+        <Link to="/student/profile">Profile</Link>
+      </div>
       <h3>Staff only routes</h3>
       <div>
         <Link to="/staff/grievances/view/assigned">
           View assigned Grievances
         </Link>
+      </div>
+      <div>
+        <Link to="/staff/profile">Profile</Link>
       </div>
     </div>
   );
