@@ -1,4 +1,8 @@
-const { getComments, addComment } = require("../controllers/comment/comment");
+const {
+  getComments,
+  addComment,
+  addAnonymousComment,
+} = require("../controllers/comment/comment");
 const protect = require("../middleware/auth");
 
 const router = require("express").Router();
@@ -8,5 +12,8 @@ router.get("/:grievanceId", protect, getComments);
 
 // add a comment to a grievance
 router.post("/:grievanceId", protect, addComment);
+
+// add a anonymous comment to a grievance
+router.post("/anonymous/:grievanceId", addAnonymousComment);
 
 module.exports = router;

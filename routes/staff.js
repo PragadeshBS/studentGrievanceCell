@@ -7,7 +7,8 @@ router.post("/login", login);
 
 router.post("/register", register);
 
-router.get("/", protect, getStaffs);
+// get staffs from any of the chosen departments
+router.get("/department/:departmentId", getStaffs);
 
 router.get("/profile", protect, getStaffProfile);
 

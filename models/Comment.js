@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema(
     authorType: {
       type: String,
       required: true,
-      enum: ["staff", "student"],
+      enum: ["staff", "student", "anonymous"],
     },
     grievance: {
       type: mongoose.Schema.Types.ObjectId,

@@ -31,7 +31,7 @@ const addComment = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Comment added successfully",
-      comment: comment,
+      comment,
     });
   } catch (error) {
     console.log(error);
@@ -42,7 +42,32 @@ const addComment = async (req, res) => {
   }
 };
 
+// add an anonymous comment to a grievance
+const addAnonymousComment = async (req, res) => {
+  try {
+    const grievanceId = req.params.grievanceId;
+    const comment = await Comment.create({
+      grievance: grievanceId,
+      comment: req.body.comment,
+      authorType: "anonymous",
+    });
+    res.status(201).json({
+      success: true,
+      message: "Comment added successfully",
+      comment,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Unable to add comment",
+    });
+  }
+};
+
+
 module.exports = {
   getComments,
   addComment,
+  addAnonymousComment,
 };

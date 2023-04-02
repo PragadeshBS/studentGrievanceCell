@@ -1,4 +1,5 @@
 const Grievance = require("../../models/Grievance");
+const AnonymousGrievance = require("../../models/AnonymousGrievance");
 
 // create a new grievance
 const addGrievance = async (req, res) => {
@@ -73,6 +74,29 @@ const getStaffGrievances = async (req, res) => {
   }
 };
 
+// get all anonymous grievances assigned to a staff
+const getAssignedAnonymousGrievances = async (req, res) => {
+  try {
+    const grievances = await AnonymousGrievance.find({
+      staffAssigned: req.user.userInfo._id,
+    })
+      .populate("grievanceStatus", "title")
+      .populate("grievanceType", "name")
+      .populate("staffAssigned", ["name", "designation"]);
+    res.status(200).json({
+      success: true,
+      message: "Grievances fetched successfully",
+      grievances,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
 // get details of a grievance
 const getGrievance = async (req, res) => {
   try {
@@ -108,5 +132,6 @@ module.exports = {
   addGrievance,
   getStudentGrievances,
   getStaffGrievances,
+  getAssignedAnonymousGrievances,
   getGrievance,
 };

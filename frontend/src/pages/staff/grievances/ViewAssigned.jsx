@@ -5,9 +5,13 @@ import { Link } from "react-router-dom";
 const ViewAssignedGrievances = () => {
   const [loading, setLoading] = useState(true);
   const [grievances, setGrievances] = useState([]);
+  const [anonymousGrievances, setAnonymousGrievances] = useState([]);
   useEffect(() => {
     axios.get("/api/grievance/staff").then((res) => {
-      setLoading(false);
+      axios.get("/api/grievance/staff/anonymous").then((res) => {
+        setLoading(false);
+        setAnonymousGrievances(res.data.grievances);
+      });
       setGrievances(res.data.grievances);
     });
   }, []);
@@ -25,6 +29,19 @@ const ViewAssignedGrievances = () => {
             <p>{grievance.grievanceStatus.title}</p>
             <p>{grievance.grievanceType.name}</p>
             <p>{grievance.student.name}</p>
+          </li>
+        ))}
+      </ul>
+      <h1>Anonymous Grievances</h1>
+      <ul>
+        {anonymousGrievances.map((grievance) => (
+          <li key={grievance._id}>
+            <Link to={`/staff/grievances/view/assigned/anonymous/${grievance._id}`}>
+              <h3>{grievance.title}</h3>
+            </Link>
+            <p>{grievance.description}</p>
+            <p>{grievance.grievanceStatus.title}</p>
+            <p>{grievance.grievanceType.name}</p>
           </li>
         ))}
       </ul>

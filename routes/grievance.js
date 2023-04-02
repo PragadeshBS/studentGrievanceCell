@@ -3,6 +3,7 @@ const {
   getStudentGrievances,
   getStaffGrievances,
   getGrievance,
+  getAssignedAnonymousGrievances,
 } = require("../controllers/grievance/grievance");
 const { getGrievanceTypes } = require("../controllers/grievance/grievanceType");
 const {
@@ -23,6 +24,8 @@ router.get("/student", protect, getStudentGrievances);
 
 // get all grievances assigned to a staff
 router.get("/staff", protect, getStaffGrievances);
+
+router.get("/staff/anonymous", protect, getAssignedAnonymousGrievances);
 
 // get details of a grievance
 router.get("/:grievanceId", protect, getGrievance);

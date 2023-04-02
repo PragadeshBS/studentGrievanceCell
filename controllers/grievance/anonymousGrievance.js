@@ -1,0 +1,104 @@
+const { nanoid } = require("nanoid");
+const AnonymousGrievance = require("../../models/AnonymousGrievance");
+const GrievanceStatus = require("../../models/GrievanceStatus");
+
+const createAnonymousGrievance = async (req, res) => {
+  try {
+    const { title, description, grievanceType, staffAssigned } = req.body;
+    const trackingId = nanoid(8);
+    const grievance = await AnonymousGrievance.create({
+      title,
+      description,
+      grievanceType,
+      staffAssigned,
+      trackingId,
+    });
+    res.status(201).json({
+      success: true,
+      message: "Grievance created successfully",
+      grievance,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+const getAnonymousGrievance = async (req, res) => {
+  try {
+    let grievance;
+    if (req.params.grievanceId) {
+      grievance = await AnonymousGrievance.findById(req.params.grievanceId)
+        .populate("grievanceStatus", "title")
+        .populate("grievanceType", "name")
+        .populate("staffAssigned", ["name", "designation"]);
+    } else {
+      const { trackingId } = req.params;
+      grievance = await AnonymousGrievance.findOne({ trackingId })
+        .populate("grievanceStatus", "title")
+        .populate("grievanceType", "name")
+        .populate("staffAssigned", ["name", "designation"]);
+    }
+    if (!grievance) {
+      return res.status(404).json({
+        success: false,
+        message: "Grievance not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Grievance fetched successfully",
+      grievance,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+const modifyAnonymousGrievanceStatus = async (req, res) => {
+  try {
+    const { grievanceId } = req.params;
+    const { grievanceStatus } = req.body;
+    const grievanceStatusId = await GrievanceStatus.findOne({
+      title: grievanceStatus,
+    });
+    if (!grievanceStatusId) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid grievance status",
+      });
+    }
+    const updatedGrievance = await AnonymousGrievance.findOneAndUpdate(
+      { _id: grievanceId },
+      { grievanceStatus: grievanceStatusId },
+      { new: true }
+    )
+      .populate("grievanceStatus", "title")
+      .populate("grievanceType", "name")
+      .populate("staffAssigned", ["name", "designation"]);
+    res.status(200).json({
+      success: false,
+      message: "Grievance status updated successfully",
+      grievance: updatedGrievance,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: "error",
+      message: "Server Error",
+    });
+  }
+};
+
+module.exports = {
+  createAnonymousGrievance,
+  getAnonymousGrievance,
+  modifyAnonymousGrievanceStatus,
+};

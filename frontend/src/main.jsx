@@ -19,6 +19,9 @@ import ViewGrievanceDetailsStaff from "./pages/staff/grievances/ViewGrievanceDet
 import ViewGrievanceDetailsStudent from "./pages/student/grievance/ViewGrievanceDetails";
 import StudentProfile from "./pages/student/Profile";
 import StaffProfile from "./pages/staff/Profile";
+import CreateAnonymousGrievance from "./pages/anonymous/grievances/Create";
+import TrackAnonymousGrievance from "./pages/anonymous/grievances/View";
+import ViewAnonymousGrievanceDetails from "./pages/staff/grievances/ViewAnonymousGrievanceDetails";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +29,24 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <HomePage /> },
+      {
+        path: "anonymous",
+        children: [
+          {
+            path: "grievances",
+            children: [
+              {
+                path: "create",
+                element: <CreateAnonymousGrievance />,
+              },
+              {
+                path: "track",
+                element: <TrackAnonymousGrievance />,
+              },
+            ],
+          },
+        ],
+      },
       {
         path: "auth/login/",
         children: [
@@ -94,6 +115,10 @@ const router = createBrowserRouter([
               {
                 path: "view/assigned/:grievanceId",
                 element: <ViewGrievanceDetailsStaff />,
+              },
+              {
+                path: "view/assigned/anonymous/:grievanceId",
+                element: <ViewAnonymousGrievanceDetails />,
               },
             ],
           },

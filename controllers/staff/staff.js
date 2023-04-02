@@ -3,7 +3,7 @@ const Staff = require("../../models/Staff");
 // get list of staffs from the student's department
 const getStaffs = async (req, res) => {
   try {
-    const { department: departmentId } = req.user.userInfo;
+    const { departmentId } = req.params;
     const staffs = await Staff.find({ department: departmentId });
     res.status(200).json({
       success: true,

@@ -23,6 +23,16 @@ const HomePage = () => {
       </div>
       <h3>Public routes</h3>
       <div>
+        <Link to="/anonymous/grievances/create">
+          Submit a Grievance (Anonymous)
+        </Link>
+      </div>
+      <div>
+        <Link to="/anonymous/grievances/track">
+          Track an anonymous Grievance
+        </Link>
+      </div>
+      <div>
         <Link to="/auth/login/staff">Staff Login</Link>
       </div>
       <div>
