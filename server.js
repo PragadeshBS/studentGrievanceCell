@@ -16,6 +16,7 @@ require("./models/Comment");
 
 const staffRouter = require("./routes/staff");
 const studentRouter = require("./routes/student");
+const adminRouter = require("./routes/admin");
 const grienvaceRouter = require("./routes/grievance");
 const anonymousGrievanceRouter = require("./routes/anonymousGrievance");
 const departmentRouter = require("./routes/department");
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
 
 app.use("/api/staff", staffRouter);
 app.use("/api/student", studentRouter);
+app.use("/api/admin", adminRouter);
 app.use("/api/grievance", grienvaceRouter);
 app.use("/api/anonymousGrievance", anonymousGrievanceRouter);
 app.use("/api/department", departmentRouter);

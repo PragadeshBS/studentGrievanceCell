@@ -16,8 +16,9 @@ const TrackAnonymousGrievance = () => {
       .then((res) => {
         setGrievance(res.data.grievance);
         axios
-          .get("/api/comment/" + res.data.grievance._id)
+          .get("/api/comment/anonymous/" + res.data.grievance._id)
           .then((res) => {
+            console.log(res.data);
             setComments(res.data.comments);
             setLoading(false);
           })
@@ -89,6 +90,8 @@ const TrackAnonymousGrievance = () => {
               <p>
                 {comment.authorType === "anonymous"
                   ? "Anonymous"
+                  : comment.authorType === "admin"
+                  ? "Admin"
                   : grievance.staffAssigned.name}
               </p>
             </div>

@@ -65,7 +65,6 @@ const addAnonymousComment = async (req, res) => {
   }
 };
 
-
 module.exports = {
   getComments,
   addComment,

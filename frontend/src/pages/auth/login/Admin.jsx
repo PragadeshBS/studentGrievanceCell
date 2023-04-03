@@ -4,7 +4,7 @@ import axios from "axios";
 import { useAuthDispatch } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const StaffLogin = () => {
+const AdminLogin = () => {
   const authDispatch = useAuthDispatch();
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,14 +15,14 @@ const StaffLogin = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = ({ staffId, password }) => {
+  const onSubmit = ({ email, password }) => {
     setLoading(true);
     axios
-      .post("/api/staff/login", { staffId, password })
+      .post("/api/admin/login", { email, password })
       .then((res) => {
         authDispatch({
-          user: res.data.staff,
-          userType: "staff",
+          user: res.data.admin,
+          userType: "admin",
           type: "LOGIN",
         });
         setErrorMsg("");
@@ -37,20 +37,20 @@ const StaffLogin = () => {
 
   return (
     <div>
-      <h1>Staff Login</h1>
+      <h1>Admin Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <input
-            placeholder="Staff ID"
-            {...register("staffId", {
-              required: "Staff ID is required",
+            placeholder="Email"
+            {...register("email", {
+              required: "Email is required",
               minLength: {
                 value: 3,
-                message: "Staff ID must be at least 3 characters",
+                message: "Email must be at least 3 characters",
               },
             })}
           />
-          {errors.staffId && <p role="alert">{errors.staffId?.message}</p>}
+          {errors.email && <p role="alert">{errors.email?.message}</p>}
         </div>
         <div>
           <input
@@ -72,4 +72,4 @@ const StaffLogin = () => {
     </div>
   );
 };
-export default StaffLogin;
+export default AdminLogin;

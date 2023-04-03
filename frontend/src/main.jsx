@@ -22,6 +22,11 @@ import StaffProfile from "./pages/staff/Profile";
 import CreateAnonymousGrievance from "./pages/anonymous/grievances/Create";
 import TrackAnonymousGrievance from "./pages/anonymous/grievances/View";
 import ViewAnonymousGrievanceDetails from "./pages/staff/grievances/ViewAnonymousGrievanceDetails";
+import AdminLogin from "./pages/auth/login/Admin";
+import AdminProtect from "./pages/admin/AdminProtect";
+import ViewGrievancesAdmin from "./pages/admin/grievances/ViewGrievances";
+import GrievanceDetailsAdmin from "./pages/admin/grievances/GrievanceDetails";
+import AnonymousGrievanceDetailsAdmin from "./pages/admin/grievances/AnonymousGrievanceDetails";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +62,10 @@ const router = createBrowserRouter([
           {
             path: "student",
             element: <StudentLogin />,
+          },
+          {
+            path: "admin",
+            element: <AdminLogin />,
           },
         ],
       },
@@ -119,6 +128,29 @@ const router = createBrowserRouter([
               {
                 path: "view/assigned/anonymous/:grievanceId",
                 element: <ViewAnonymousGrievanceDetails />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "admin",
+        element: <AdminProtect />,
+        children: [
+          {
+            path: "grievances",
+            children: [
+              {
+                path: "view/all",
+                element: <ViewGrievancesAdmin />,
+              },
+              {
+                path: "view/:grievanceId",
+                element: <GrievanceDetailsAdmin />,
+              },
+              {
+                path: "view/anonymous/:grievanceId",
+                element: <AnonymousGrievanceDetailsAdmin />,
               },
             ],
           },

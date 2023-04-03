@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const commentSchema = new mongoose.Schema(
+const commentSchema = mongoose.Schema(
   {
     comment: {
       type: String,
@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema(
     authorType: {
       type: String,
       required: true,
-      enum: ["staff", "student", "anonymous"],
+      enum: ["staff", "student", "anonymous", "admin"],
     },
     grievance: {
       type: mongoose.Schema.Types.ObjectId,

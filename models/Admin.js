@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 
-const grievanceTypeSchema = mongoose.Schema(
+const AdminSchema = mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
     },
-    description: {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
       type: String,
       required: true,
     },
@@ -14,4 +18,4 @@ const grievanceTypeSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("GrievanceType", grievanceTypeSchema);
+module.exports = mongoose.model("Admin", AdminSchema);

@@ -36,7 +36,10 @@ const HomePage = () => {
         <Link to="/auth/login/staff">Staff Login</Link>
       </div>
       <div>
-        <Link to="/auth/login/Student">Student Login</Link>
+        <Link to="/auth/login/student">Student Login</Link>
+      </div>
+      <div>
+        <Link to="/auth/login/admin">Admin Login</Link>
       </div>
       <div>
         <Link to="/auth/register/staff">Staff Register</Link>
@@ -65,6 +68,10 @@ const HomePage = () => {
       </div>
       <div>
         <Link to="/staff/profile">Profile</Link>
+      </div>
+      <h3>Admin only routes</h3>
+      <div>
+        <Link to="/admin/grievances/view/all">View all Grievances</Link>
       </div>
     </div>
   );

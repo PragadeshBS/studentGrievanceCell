@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const anonymousGrievanceSchema = new mongoose.Schema(
+const anonymousGrievanceSchema = mongoose.Schema(
   {
     title: {
       type: String,

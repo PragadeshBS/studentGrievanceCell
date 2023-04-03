@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Student = require("../models/Student");
 const Staff = require("../models/Staff");
+const Admin = require("../models/Admin");
 
 const protect = async (req, res, next) => {
   const token = req.cookies["token"];
@@ -29,10 +30,21 @@ const protect = async (req, res, next) => {
       };
       next();
       return;
+    } else if (decoded.userType === "admin") {
+      const admin = await Admin.findById(decoded.userId).select("-password");
+      req.user = {
+        userType: decoded.userType,
+        userInfo: admin,
+      };
+      next();
+    } else {
+      return res
+        .status(401)
+        .json({
+          success: false,
+          message: "Not authorized to access this route",
+        });
     }
-    return res
-      .status(401)
-      .json({ success: false, message: "Not authorized to access this route" });
   } catch (err) {
     return res
       .status(401)
