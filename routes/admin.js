@@ -9,27 +9,57 @@ const {
 const {
   getStaffsFromDepartment,
   getStaffById,
+  getUnapprovedStaffs,
+  approveStaff,
 } = require("../controllers/admin/staff");
 const protect = require("../middleware/auth");
+const { protectAdmin } = require("../middleware/checkUserRole");
 
 router.post("/login", adminLogin);
 
-router.get("/grievances/view", protect, getAllGrievances);
+router.get("/grievances/view", protect, protectAdmin, getAllGrievances);
 
-router.get("/grievances/view/:id", protect, getGrievanceById);
+router.get("/grievances/view/:id", protect, protectAdmin, getGrievanceById);
 
-router.get("/anonymous-grievances/view", protect, getAllAnonymousGrievances);
+router.get(
+  "/anonymous-grievances/view",
+  protect,
+  protectAdmin,
+  getAllAnonymousGrievances
+);
 
 router.get(
   "/anonymous-grievances/view/:id",
   protect,
+  protectAdmin,
   getAnonymousGrievanceById
 );
 
 // get all staffs from a department
-router.get("/staffs/view/department/:deptId", protect, getStaffsFromDepartment);
+router.get(
+  "/staffs/view/department/:deptId",
+  protect,
+  protectAdmin,
+  getStaffsFromDepartment
+);
 
 // get a single staff by id
-router.get("/staffs/view/details/:staffId", protect, getStaffById);
+router.get(
+  "/staffs/view/details/:staffId",
+  protect,
+  protectAdmin,
+  getStaffById
+);
+
+// get unapproved staffs
+router.get(
+  "/staffs/view/unapproved",
+  protect,
+  protectAdmin,
+  getUnapprovedStaffs
+);
+
+// approve a staff with id
+router.put("/staffs/approve/:staffId", protect, protectAdmin, approveStaff);
 
 module.exports = router;

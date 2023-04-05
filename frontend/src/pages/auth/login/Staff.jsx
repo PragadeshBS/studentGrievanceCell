@@ -20,17 +20,31 @@ const StaffLogin = () => {
     axios
       .post("/api/staff/login", { staffId, password })
       .then((res) => {
-        authDispatch({
-          user: res.data.staff,
-          userType: "staff",
-          type: "LOGIN",
-        });
-        setErrorMsg("");
-        setLoading(false);
-        navigate("/");
+        if (res.data.message.indexOf("Staff logged in successfully") !== -1) {
+          authDispatch({
+            user: res.data.staff,
+            userType: "staff",
+            type: "LOGIN",
+          });
+          setErrorMsg("");
+          setLoading(false);
+          navigate("/");
+        } else if (
+          res.data.message.indexOf("Admin logged in successfully") !== -1
+        ) {
+          authDispatch({
+            user: res.data.admin,
+            userType: "admin",
+            type: "LOGIN",
+          });
+          setErrorMsg("");
+          setLoading(false);
+          navigate("/");
+        }
       })
       .catch((err) => {
         setLoading(false);
+        console.log(err);
         setErrorMsg(err.response.data.message);
       });
   };

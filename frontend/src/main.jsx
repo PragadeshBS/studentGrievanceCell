@@ -30,6 +30,7 @@ import AnonymousGrievanceDetailsAdmin from "./pages/admin/grievances/AnonymousGr
 import ViewDeptStaffs from "./pages/admin/staff/ViewDeptStaffs";
 import ViewStaffs from "./pages/admin/staff/ViewStaffs";
 import ViewStaffDetails from "./pages/admin/staff/ViewStaffDetails";
+import ApproveStaffs from "./pages/admin/staff/ApproveStaffs";
 
 const router = createBrowserRouter([
   {
@@ -143,6 +144,10 @@ const router = createBrowserRouter([
           {
             path: "staffs",
             children: [
+              {
+                path: "approve",
+                element: <ApproveStaffs />,
+              },
               {
                 path: "details/:staffId",
                 element: <ViewStaffDetails />,

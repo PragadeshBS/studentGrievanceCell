@@ -34,6 +34,10 @@ const staffSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    approvedByAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

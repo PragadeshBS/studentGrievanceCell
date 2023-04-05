@@ -32,6 +32,7 @@ const ViewDeptStaffs = () => {
               <th>Staff ID</th>
               <th>Name</th>
               <th>Designation</th>
+              <th>Approved</th>
               <th>More info</th>
             </tr>
           </thead>
@@ -41,6 +42,7 @@ const ViewDeptStaffs = () => {
                 <td>{staff.staffId}</td>
                 <td>{staff.name}</td>
                 <td>{staff.designation}</td>
+                <td>{staff.approvedByAdmin ? "Yes" : "No"}</td>
                 <td>
                   <Link to={`/admin/staffs/details/${staff._id}`}>
                     <button>View</button>

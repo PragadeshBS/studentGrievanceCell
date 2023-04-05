@@ -1,3 +1,4 @@
+const Admin = require("../../models/Admin");
 const Staff = require("../../models/Staff");
 const { hashPassword, verifyPassword } = require("../../utils/hashPassword");
 const { createToken } = require("../../utils/userToken");
@@ -5,18 +6,45 @@ const { createToken } = require("../../utils/userToken");
 const login = async (req, res) => {
   const { staffId, password } = req.body;
   try {
-    const staff = await Staff.findOne({ staffId });
+    // check if staff is admin
+    const admin = await Admin.findOne({ email: staffId });
+    if (admin) {
+      const isPasswordCorrect = await verifyPassword(password, admin.password);
+      if (!isPasswordCorrect) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid credentials or not approved by admin",
+        });
+      }
+      res.cookie(
+        "token",
+        createToken({ userId: admin.id, userType: "admin" }),
+        {
+          maxAge: 1000 * 60 * 60 * 24 * 14,
+          httpOnly: true,
+          sameSite: "strict",
+        }
+      );
+      // remove password from response
+      admin.password = undefined;
+      return res.status(200).json({
+        success: true,
+        message: "Admin logged in successfully",
+        admin,
+      });
+    }
+    const staff = await Staff.findOne({ staffId, approvedByAdmin: true });
     if (!staff) {
       return res.status(400).json({
         success: false,
-        message: "Invalid credentials",
+        message: "Invalid credentials or not approved by admin",
       });
     }
     const isPasswordCorrect = await verifyPassword(password, staff.password);
     if (!isPasswordCorrect) {
       return res.status(400).json({
         success: false,
-        message: "Invalid credentials",
+        message: "Invalid credentials or not approved by admin",
       });
     }
     res.cookie("token", createToken({ userId: staff.id, userType: "staff" }), {

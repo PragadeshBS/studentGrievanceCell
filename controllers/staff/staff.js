@@ -4,7 +4,10 @@ const Staff = require("../../models/Staff");
 const getStaffs = async (req, res) => {
   try {
     const { departmentId } = req.params;
-    const staffs = await Staff.find({ department: departmentId });
+    const staffs = await Staff.find({
+      department: departmentId,
+      approvedByAdmin: true,
+    }).select(["-password", "-createdAt", "-updatedAt"]);
     res.status(200).json({
       success: true,
       message: "List of staffs",
@@ -23,7 +26,7 @@ const getStaffs = async (req, res) => {
 const getStaffProfile = async (req, res) => {
   try {
     const staff = await Staff.findById(req.user.userInfo._id)
-      .select("-password")
+      .select(["-password", "-createdAt", "-updatedAt"])
       .populate("department", "name");
     return res.status(200).json({
       success: true,

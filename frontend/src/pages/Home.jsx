@@ -76,6 +76,9 @@ const HomePage = () => {
       <div>
         <Link to="/admin/staffs/view">View Department Staffs</Link>
       </div>
+      <div>
+        <Link to="/admin/staffs/approve">Approve Registered Staffs</Link>
+      </div>
     </div>
   );
 };

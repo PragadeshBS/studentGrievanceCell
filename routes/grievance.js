@@ -10,6 +10,7 @@ const {
   modifyGrievanceStatus,
 } = require("../controllers/grievance/grievanceStatus");
 const protect = require("../middleware/auth");
+const { protectStaff } = require("../middleware/checkUserRole");
 
 const router = require("express").Router();
 
@@ -23,9 +24,14 @@ router.get("/types", getGrievanceTypes);
 router.get("/student", protect, getStudentGrievances);
 
 // get all grievances assigned to a staff
-router.get("/staff", protect, getStaffGrievances);
+router.get("/staff", protect, protectStaff, getStaffGrievances);
 
-router.get("/staff/anonymous", protect, getAssignedAnonymousGrievances);
+router.get(
+  "/staff/anonymous",
+  protect,
+  protectStaff,
+  getAssignedAnonymousGrievances
+);
 
 // get details of a grievance
 router.get("/:grievanceId", protect, getGrievance);
