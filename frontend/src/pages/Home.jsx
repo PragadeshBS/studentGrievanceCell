@@ -73,6 +73,9 @@ const HomePage = () => {
       <div>
         <Link to="/admin/grievances/view/all">View all Grievances</Link>
       </div>
+      <div>
+        <Link to="/admin/staffs/view">View Department Staffs</Link>
+      </div>
     </div>
   );
 };

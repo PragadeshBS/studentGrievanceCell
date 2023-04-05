@@ -27,6 +27,9 @@ import AdminProtect from "./pages/admin/AdminProtect";
 import ViewGrievancesAdmin from "./pages/admin/grievances/ViewGrievances";
 import GrievanceDetailsAdmin from "./pages/admin/grievances/GrievanceDetails";
 import AnonymousGrievanceDetailsAdmin from "./pages/admin/grievances/AnonymousGrievanceDetails";
+import ViewDeptStaffs from "./pages/admin/staff/ViewDeptStaffs";
+import ViewStaffs from "./pages/admin/staff/ViewStaffs";
+import ViewStaffDetails from "./pages/admin/staff/ViewStaffDetails";
 
 const router = createBrowserRouter([
   {
@@ -137,6 +140,25 @@ const router = createBrowserRouter([
         path: "admin",
         element: <AdminProtect />,
         children: [
+          {
+            path: "staffs",
+            children: [
+              {
+                path: "details/:staffId",
+                element: <ViewStaffDetails />,
+              },
+              {
+                path: "view",
+                element: <ViewStaffs />,
+                children: [
+                  {
+                    path: "department/:departmentId",
+                    element: <ViewDeptStaffs />,
+                  },
+                ],
+              },
+            ],
+          },
           {
             path: "grievances",
             children: [

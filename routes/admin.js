@@ -6,6 +6,10 @@ const {
   getAllAnonymousGrievances,
   getAnonymousGrievanceById,
 } = require("../controllers/admin/grievances");
+const {
+  getStaffsFromDepartment,
+  getStaffById,
+} = require("../controllers/admin/staff");
 const protect = require("../middleware/auth");
 
 router.post("/login", adminLogin);
@@ -21,5 +25,11 @@ router.get(
   protect,
   getAnonymousGrievanceById
 );
+
+// get all staffs from a department
+router.get("/staffs/view/department/:deptId", protect, getStaffsFromDepartment);
+
+// get a single staff by id
+router.get("/staffs/view/details/:staffId", protect, getStaffById);
 
 module.exports = router;

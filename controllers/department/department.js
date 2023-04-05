@@ -29,7 +29,25 @@ const getDepartments = async (req, res) => {
   }
 };
 
+const getDepartmentById = async (req, res) => {
+  try {
+    const department = await Department.findById(req.params.id);
+    res.status(200).json({
+      success: true,
+      message: "Department fetched successfully",
+      department,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      succes: false,
+      message: "Server Error",
+    });
+  }
+};
+
 module.exports = {
   addDepartment,
   getDepartments,
+  getDepartmentById,
 };
