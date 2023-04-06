@@ -22,7 +22,6 @@ import StaffProfile from "./pages/staff/Profile";
 import CreateAnonymousGrievance from "./pages/anonymous/grievances/Create";
 import TrackAnonymousGrievance from "./pages/anonymous/grievances/View";
 import ViewAnonymousGrievanceDetails from "./pages/staff/grievances/ViewAnonymousGrievanceDetails";
-import AdminLogin from "./pages/auth/login/Admin";
 import AdminProtect from "./pages/admin/AdminProtect";
 import ViewGrievancesAdmin from "./pages/admin/grievances/ViewGrievances";
 import GrievanceDetailsAdmin from "./pages/admin/grievances/GrievanceDetails";
@@ -66,10 +65,6 @@ const router = createBrowserRouter([
           {
             path: "student",
             element: <StudentLogin />,
-          },
-          {
-            path: "admin",
-            element: <AdminLogin />,
           },
         ],
       },

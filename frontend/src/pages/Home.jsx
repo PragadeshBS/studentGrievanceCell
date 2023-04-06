@@ -39,9 +39,6 @@ const HomePage = () => {
         <Link to="/auth/login/student">Student Login</Link>
       </div>
       <div>
-        <Link to="/auth/login/admin">Admin Login</Link>
-      </div>
-      <div>
         <Link to="/auth/register/staff">Staff Register</Link>
       </div>
       <div>
