@@ -1,5 +1,5 @@
 const protectAdmin = (req, res, next) => {
-  if (req.user.userInfo.role !== "admin") {
+  if (req.user.userType !== "admin") {
     return res.status(401).json({
       success: false,
       message: "Not authorized to access this route",
@@ -9,7 +9,7 @@ const protectAdmin = (req, res, next) => {
 };
 
 const protectStaff = (req, res, next) => {
-  if (req.user.userInfo.role !== "staff") {
+  if (req.user.userType !== "staff") {
     return res.status(401).json({
       success: false,
       message: "Not authorized to access this route",
@@ -19,7 +19,7 @@ const protectStaff = (req, res, next) => {
 };
 
 const protectStudent = (req, res, next) => {
-  if (req.user.userInfo.role !== "student") {
+  if (req.user.userType !== "student") {
     return res.status(401).json({
       success: false,
       message: "Not authorized to access this route",
@@ -29,10 +29,7 @@ const protectStudent = (req, res, next) => {
 };
 
 const protectStaffOrAdmin = (req, res, next) => {
-  if (
-    req.user.userInfo.role !== "staff" ||
-    req.user.userInfo.role !== "admin"
-  ) {
+  if (req.user.userType !== "staff" || req.user.userType !== "admin") {
     return res.status(401).json({
       success: false,
       message: "Not authorized to access this route",
