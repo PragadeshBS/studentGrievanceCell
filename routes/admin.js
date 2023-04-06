@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { adminLogin } = require("../controllers/admin/adminAuth");
 const {
   getAllGrievances,
   getGrievanceById,
@@ -14,8 +13,6 @@ const {
 } = require("../controllers/admin/staff");
 const protect = require("../middleware/auth");
 const { protectAdmin } = require("../middleware/checkUserRole");
-
-router.post("/login", adminLogin);
 
 router.get("/grievances/view", protect, protectAdmin, getAllGrievances);
 
