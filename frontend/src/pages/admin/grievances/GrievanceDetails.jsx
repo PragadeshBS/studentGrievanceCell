@@ -52,6 +52,10 @@ const GrievanceDetailsAdmin = () => {
       <p>{grievance.grievanceType.name}</p>
       <p>{grievance.student.name}</p>
       <p>{grievance.student.registerNo}</p>
+      <p>
+        {grievance.staffAssigned.name},{" "}
+        {grievance.staffAssigned.department.name}
+      </p>
       <h2>Comments</h2>
       {comments.map((comment) => (
         <div key={comment._id}>

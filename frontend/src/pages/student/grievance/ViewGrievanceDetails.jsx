@@ -60,6 +60,8 @@ const ViewGrievanceDetailsStaff = () => {
           <p>
             {comment.authorType === "student"
               ? "You"
+              : comment.authorType === "admin"
+              ? "admin"
               : grievance.staffAssigned.name}
           </p>
         </div>

@@ -5,8 +5,16 @@ const AnonymousGrievance = require("../../models/AnonymousGrievance");
 const getAllGrievances = async (req, res) => {
   try {
     const grievances = await Grievance.find()
-      .populate("student")
-      .populate("staffAssigned")
+      .populate({
+        path: "student",
+        select: "name email rollNumber department",
+        populate: { path: "department" },
+      })
+      .populate({
+        path: "staffAssigned",
+        select: "name email department designation",
+        populate: { path: "department" },
+      })
       .populate("grievanceStatus")
       .populate("grievanceType");
     res.status(200).json({
@@ -24,7 +32,10 @@ const getGrievanceById = async (req, res) => {
   try {
     const grievance = await Grievance.findById(req.params.id)
       .populate("student")
-      .populate("staffAssigned")
+      .populate({
+        path: "staffAssigned",
+        populate: { path: "department" },
+      })
       .populate("grievanceStatus")
       .populate("grievanceType");
     res.status(200).json({
