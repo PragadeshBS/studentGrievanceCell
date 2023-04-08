@@ -3,7 +3,7 @@ const sentimentAnalysis = async (data) => {
     "https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english",
     {
       headers: {
-        Authorization: "Bearer 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",
+        Authorization: process.env.HUGGING_FACE_API,
       },
       method: "POST",
       body: JSON.stringify(data),
