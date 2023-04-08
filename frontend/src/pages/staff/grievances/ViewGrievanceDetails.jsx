@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 const ViewGrievanceDetailsStaff = () => {
   const [loading, setLoading] = useState(true);
   const [grievance, setGrievance] = useState({});
+  const [sentiment, setSentiment] = useState({});
   const [comments, setComments] = useState([]);
   const { grievanceId } = useParams();
   const {
@@ -35,9 +36,9 @@ const ViewGrievanceDetailsStaff = () => {
   };
   useEffect(() => {
     axios.get("/api/grievance/" + grievanceId).then((res) => {
-      console.log(res.data.grievance);
-      setLoading(false);
       setGrievance(res.data.grievance);
+      setSentiment(res.data.sentiment);
+      setLoading(false);
     });
     axios.get("/api/comment/" + grievanceId).then((res) => {
       setComments(res.data.comments);
@@ -47,6 +48,13 @@ const ViewGrievanceDetailsStaff = () => {
   return (
     <div>
       <h1>{grievance.title}</h1>
+      <p>{grievance.createdAt}</p>
+      <p>
+        Sentiment:{" "}
+        {sentiment.positive > sentiment.negative
+          ? "Positive " + sentiment.positive + "%"
+          : "Negative " + sentiment.negative + "%"}
+      </p>
       <p>{grievance.description}</p>
       <p>Status: {grievance.grievanceStatus.title}</p>
       <p>{grievance.grievanceType.name}</p>

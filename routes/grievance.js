@@ -10,7 +10,10 @@ const {
   modifyGrievanceStatus,
 } = require("../controllers/grievance/grievanceStatus");
 const protect = require("../middleware/auth");
-const { protectStaff } = require("../middleware/checkUserRole");
+const {
+  protectStaff,
+  protectStaffOrAdmin,
+} = require("../middleware/checkUserRole");
 
 const router = require("express").Router();
 
@@ -37,6 +40,11 @@ router.get(
 router.get("/:grievanceId", protect, getGrievance);
 
 // modify a grievance status
-router.patch("/status/:grievanceId", protect, modifyGrievanceStatus);
+router.patch(
+  "/status/:grievanceId",
+  protect,
+  protectStaffOrAdmin,
+  modifyGrievanceStatus
+);
 
 module.exports = router;

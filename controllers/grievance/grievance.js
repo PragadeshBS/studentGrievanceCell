@@ -1,5 +1,6 @@
 const Grievance = require("../../models/Grievance");
 const AnonymousGrievance = require("../../models/AnonymousGrievance");
+const { sentimentAnalysis } = require("../../utils/mlTasks");
 
 // create a new grievance
 const addGrievance = async (req, res) => {
@@ -114,10 +115,40 @@ const getGrievance = async (req, res) => {
         message: "Grievance not found",
       });
     }
+    // check if the user is authorized to view the grievance
+    if (
+      grievance.student._id.toString() !== req.user.userInfo._id.toString() &&
+      grievance.staffAssigned._id.toString() !==
+        req.user.userInfo._id.toString()
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied",
+      });
+    }
+    const sentiment = (await sentimentAnalysis(grievance.description))[0];
+    const sentimentScore = {
+      positive:
+        sentiment[0].label === "POSITIVE"
+          ? sentiment[0].score
+          : sentiment[1].score,
+      negative:
+        sentiment[0].label === "NEGATIVE"
+          ? sentiment[0].score
+          : sentiment[1].score,
+    };
+    // get percentage and round off to 2 decimal places
+    sentimentScore.positive = Math.round(sentimentScore.positive * 1e4) / 100;
+    sentimentScore.negative = Math.round(sentimentScore.negative * 1e4) / 100;
+
     res.status(200).json({
       success: true,
       message: "Grievance fetched successfully",
       grievance,
+      sentiment:
+        req.user.userType === "staff" || req.user.userType === "admin"
+          ? sentimentScore
+          : null,
     });
   } catch (err) {
     console.log(err);
