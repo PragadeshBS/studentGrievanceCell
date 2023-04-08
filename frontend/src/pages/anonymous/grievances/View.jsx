@@ -78,6 +78,7 @@ const TrackAnonymousGrievance = () => {
       ) : (
         <div>
           <h1>{grievance.title}</h1>
+          <p>Tracking ID: {grievance.trackingId}</p>
           <p>{grievance.description}</p>
           <p>Status: {grievance.grievanceStatus.title}</p>
           <p>{grievance.grievanceType.name}</p>

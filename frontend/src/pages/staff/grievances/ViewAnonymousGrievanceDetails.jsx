@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 const ViewAnonymousGrievanceDetails = () => {
   const [loading, setLoading] = useState(true);
   const [grievance, setGrievance] = useState({});
+  const [sentiment, setSentiment] = useState({});
   const [comments, setComments] = useState([]);
   const { grievanceId } = useParams();
   const {
@@ -35,8 +36,9 @@ const ViewAnonymousGrievanceDetails = () => {
   };
   useEffect(() => {
     axios.get("/api/anonymousGrievance/id/" + grievanceId).then((res) => {
-      setLoading(false);
       setGrievance(res.data.grievance);
+      setSentiment(res.data.sentiment);
+      setLoading(false);
     });
     axios.get("/api/comment/" + grievanceId).then((res) => {
       setComments(res.data.comments);
@@ -46,6 +48,13 @@ const ViewAnonymousGrievanceDetails = () => {
   return (
     <div>
       <h1>{grievance.title}</h1>
+      <p>{grievance.createdAt}</p>
+      <p>
+        Sentiment:{" "}
+        {sentiment.positive > sentiment.negative
+          ? "Positive " + sentiment.positive + "%"
+          : "Negative " + sentiment.negative + "%"}
+      </p>
       <p>{grievance.description}</p>
       <p>Status: {grievance.grievanceStatus.title}</p>
       <p>{grievance.grievanceType.name}</p>
@@ -54,7 +63,13 @@ const ViewAnonymousGrievanceDetails = () => {
         <div key={comment._id}>
           <p>{comment.comment}</p>
           <p>{comment.createdAt}</p>
-          <p>{comment.authorType === "staff" ? "You" : "Anonymous"}</p>
+          <p>
+            {comment.authorType === "staff"
+              ? grievance.staffAssigned.name
+              : comment.authorType === "admin"
+              ? "Admin"
+              : "Anonymous"}
+          </p>
         </div>
       ))}
       {grievance.grievanceStatus.title !== "Closed" && (

@@ -29,7 +29,8 @@ const protectStudent = (req, res, next) => {
 };
 
 const protectStaffOrAdmin = (req, res, next) => {
-  if (req.user.userType !== "staff" || req.user.userType !== "admin") {
+  if (req.user.userType !== "staff" && req.user.userType !== "admin") {
+    console.log("here3");
     return res.status(401).json({
       success: false,
       message: "Not authorized to access this route",

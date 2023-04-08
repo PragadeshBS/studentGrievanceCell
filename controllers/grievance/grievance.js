@@ -117,6 +117,7 @@ const getGrievance = async (req, res) => {
     }
     // check if the user is authorized to view the grievance
     if (
+      req.user.userType !== "admin" && // admin can view all grievances
       grievance.student._id.toString() !== req.user.userInfo._id.toString() &&
       grievance.staffAssigned._id.toString() !==
         req.user.userInfo._id.toString()

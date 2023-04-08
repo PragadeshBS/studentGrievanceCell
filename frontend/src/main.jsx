@@ -24,8 +24,6 @@ import TrackAnonymousGrievance from "./pages/anonymous/grievances/View";
 import ViewAnonymousGrievanceDetails from "./pages/staff/grievances/ViewAnonymousGrievanceDetails";
 import AdminProtect from "./pages/admin/AdminProtect";
 import ViewGrievancesAdmin from "./pages/admin/grievances/ViewGrievances";
-import GrievanceDetailsAdmin from "./pages/admin/grievances/GrievanceDetails";
-import AnonymousGrievanceDetailsAdmin from "./pages/admin/grievances/AnonymousGrievanceDetails";
 import ViewDeptStaffs from "./pages/admin/staff/ViewDeptStaffs";
 import ViewStaffs from "./pages/admin/staff/ViewStaffs";
 import ViewStaffDetails from "./pages/admin/staff/ViewStaffDetails";
@@ -168,11 +166,11 @@ const router = createBrowserRouter([
               },
               {
                 path: "view/:grievanceId",
-                element: <GrievanceDetailsAdmin />,
+                element: <ViewGrievanceDetailsStaff />,
               },
               {
                 path: "view/anonymous/:grievanceId",
-                element: <AnonymousGrievanceDetailsAdmin />,
+                element: <ViewAnonymousGrievanceDetails />,
               },
             ],
           },

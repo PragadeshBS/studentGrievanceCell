@@ -1,6 +1,7 @@
 const { nanoid } = require("nanoid");
 const AnonymousGrievance = require("../../models/AnonymousGrievance");
 const GrievanceStatus = require("../../models/GrievanceStatus");
+const { sentimentAnalysis } = require("../../utils/mlTasks");
 
 const createAnonymousGrievance = async (req, res) => {
   try {
@@ -48,10 +49,25 @@ const getAnonymousGrievance = async (req, res) => {
         message: "Grievance not found",
       });
     }
+    const sentiment = (await sentimentAnalysis(grievance.description))[0];
+    const sentimentScore = {
+      positive:
+        sentiment[0].label === "POSITIVE"
+          ? sentiment[0].score
+          : sentiment[1].score,
+      negative:
+        sentiment[0].label === "NEGATIVE"
+          ? sentiment[0].score
+          : sentiment[1].score,
+    };
+    // get percentage and round off to 2 decimal places
+    sentimentScore.positive = Math.round(sentimentScore.positive * 1e4) / 100;
+    sentimentScore.negative = Math.round(sentimentScore.negative * 1e4) / 100;
     res.status(200).json({
       success: true,
       message: "Grievance fetched successfully",
       grievance,
+      sentiment: sentimentScore,
     });
   } catch (err) {
     console.log(err);
