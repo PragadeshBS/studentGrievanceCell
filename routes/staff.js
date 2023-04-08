@@ -11,6 +11,6 @@ router.post("/register", register);
 // get staffs from any of the chosen departments
 router.get("/department/:departmentId", getStaffs);
 
-router.get("/profile", protectStaff, getStaffProfile);
+router.get("/profile", protect, protectStaff, getStaffProfile);
 
 module.exports = router;
