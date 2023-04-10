@@ -1,12 +1,8 @@
-import { Link } from "react-router-dom";
+import Navbar from "../Navbar";
+import Test from "../Test";
 
 const Header = () => {
-  return (
-    <div>
-      <div>
-        <Link to="/">Student Grievance Cell</Link>
-      </div>
-    </div>
-  );
+  // return <Test />;
+  return <Navbar />;
 };
 export default Header;
