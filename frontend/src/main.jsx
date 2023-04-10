@@ -28,6 +28,7 @@ import ViewDeptStaffs from "./pages/admin/staff/ViewDeptStaffs";
 import ViewStaffs from "./pages/admin/staff/ViewStaffs";
 import ViewStaffDetails from "./pages/admin/staff/ViewStaffDetails";
 import ApproveStaffs from "./pages/admin/staff/ApproveStaffs";
+import "./index.css";
 
 const router = createBrowserRouter([
   {
