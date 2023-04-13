@@ -6,10 +6,10 @@ const PublicNavLinks = ({ closeNavbar }) => {
   const [isAnonmyousOpen, setIsAnonmyousOpen] = useState(false);
   const navigate = useNavigate();
   const handleClick = (e) => {
-    if (e.target.id === "dropdownNavbarLinkLogin") {
+    if (e.target.classList.contains("dropDownNavbarLinkLogin")) {
       setIsLoginOpen(!isLoginOpen);
       setIsAnonmyousOpen(false);
-    } else if (e.target.id === "dropdownNavbarLinkAnonymous") {
+    } else if (e.target.classList.contains("dropdownNavbarLinkAnonymous")) {
       setIsLoginOpen(false);
       setIsAnonmyousOpen(!isAnonmyousOpen);
     } else {
@@ -38,12 +38,12 @@ const PublicNavLinks = ({ closeNavbar }) => {
         <button
           id="dropdownNavbarLinkLogin"
           data-dropdown-toggle="dropdownNavbar"
-          className="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+          className="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent dropDownNavbarLinkLogin"
           onClick={handleClick}
         >
           Login{" "}
           <svg
-            className="w-5 h-5 ml-1"
+            className="w-5 h-5 ml-1 dropDownNavbarLinkLogin"
             aria-hidden="true"
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -53,6 +53,7 @@ const PublicNavLinks = ({ closeNavbar }) => {
               fillRule="evenodd"
               d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
               clipRule="evenodd"
+              className="dropDownNavbarLinkLogin"
             ></path>
           </svg>
         </button>
@@ -92,12 +93,12 @@ const PublicNavLinks = ({ closeNavbar }) => {
         <button
           id="dropdownNavbarLinkAnonymous"
           data-dropdown-toggle="dropdownNavbar"
-          className="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+          className="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent dropdownNavbarLinkAnonymous"
           onClick={handleClick}
         >
           Anonymous Grievance{" "}
           <svg
-            className="w-5 h-5 ml-1"
+            className="w-5 h-5 ml-1 dropdownNavbarLinkAnonymous"
             aria-hidden="true"
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -107,6 +108,7 @@ const PublicNavLinks = ({ closeNavbar }) => {
               fillRule="evenodd"
               d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
               clipRule="evenodd"
+              className="dropdownNavbarLinkAnonymous"
             ></path>
           </svg>
         </button>

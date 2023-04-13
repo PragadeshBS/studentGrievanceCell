@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuthDispatch } from "../../../context/AuthContext";
 
 const StudentLogin = () => {
@@ -70,6 +70,9 @@ const StudentLogin = () => {
           </button>
         </div>
       </form>
+      <small>
+        Don't have an account? <Link to="/auth/register/student">Register</Link>
+      </small>
     </div>
   );
 };

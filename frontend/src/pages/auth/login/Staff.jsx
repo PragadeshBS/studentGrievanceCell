@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
 import { useAuthDispatch } from "../../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const StaffLogin = () => {
   const authDispatch = useAuthDispatch();
@@ -83,6 +83,9 @@ const StaffLogin = () => {
           </button>
         </div>
       </form>
+      <small>
+        Don't have an account? <Link to="/auth/register/staff">Register</Link>
+      </small>
     </div>
   );
 };
