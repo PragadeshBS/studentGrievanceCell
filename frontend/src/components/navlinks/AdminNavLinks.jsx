@@ -56,7 +56,7 @@ const adminNavLinks = ({ closeNavbar }) => {
         {isStaffsOpen && (
           <div
             id="dropdownNavbar"
-            className="z-10 block md:absolute mt-1 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+            className="cursor-pointer z-10 block md:absolute mt-1 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
           >
             <ul
               className="py-2 text-sm text-gray-700 dark:text-gray-400"
@@ -88,7 +88,7 @@ const adminNavLinks = ({ closeNavbar }) => {
         <a
           id="viewAllGrievancesLink"
           onClick={handleClick}
-          className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+          className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
         >
           View Grievances
         </a>
@@ -97,7 +97,7 @@ const adminNavLinks = ({ closeNavbar }) => {
         <a
           id="logoutLink"
           onClick={handleClick}
-          className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+          className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
         >
           Logout
         </a>

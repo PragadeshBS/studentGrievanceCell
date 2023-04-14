@@ -18,10 +18,12 @@ const anonymousGrievanceSchema = mongoose.Schema(
     staffAssigned: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Staff",
+      required: true,
     },
     grievanceType: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "GrievanceType",
+      required: true,
     },
     grievanceStatus: {
       type: mongoose.Schema.Types.ObjectId,

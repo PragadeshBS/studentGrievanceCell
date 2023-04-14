@@ -25,9 +25,11 @@ function App() {
       });
   }, []);
   return (
-    <div className="App">
-      <Header />
-      <main>{loading ? <div>Loading...</div> : <Outlet />}</main>
+    <div className="App min-h-screen flex flex-col">
+      <div className="flex-grow">
+        <Header />
+        <main>{loading ? <div>Loading...</div> : <Outlet />}</main>
+      </div>
       <Footer />
     </div>
   );
