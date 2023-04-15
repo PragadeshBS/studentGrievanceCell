@@ -4,8 +4,13 @@ import axios from "axios";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { BiCopy } from "react-icons/bi";
 import { MdOutlineDone } from "react-icons/md";
+import ClipLoader from "react-spinners/ClipLoader";
+import DangerAlert from "../../../components/alerts/DangerAlert";
+import SuccessAlert from "../../../components/alerts/SuccessAlert";
+import ClipLoaderWithText from "../../../components/loaders/ClipLoaderWithText";
 
 const CreateAnonymousGrievance = () => {
+  const [creatingGrievance, setCreatingGrievance] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [copied, setCopied] = useState(false);
   const [grievanceTypes, setGrievanceTypes] = useState([]);
@@ -13,20 +18,24 @@ const CreateAnonymousGrievance = () => {
   const [departments, setDepartments] = useState([]);
   const [selectedDept, setSelectedDept] = useState("");
   const [trackingId, setTrackingId] = useState("");
+  const [loadingStaffList, setLoadingStaffList] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
+    setCreatingGrievance(true);
     axios
       .post("/api/anonymousGrievance", data)
       .then((res) => {
         setTrackingId(res.data.grievance.trackingId);
+        setCreatingGrievance(false);
       })
       .catch((err) => {
         console.log(err.response);
         setErrorMsg(err.response.data.message);
+        setCreatingGrievance(false);
       });
   };
   useEffect(() => {
@@ -38,8 +47,10 @@ const CreateAnonymousGrievance = () => {
     });
   }, []);
   const updateStaffs = (e) => {
+    setLoadingStaffList(true);
     setSelectedDept(e.target.value);
     axios.get(`/api/staff/department/${e.target.value}`).then((res) => {
+      setLoadingStaffList(false);
       setDeptStaffs(res.data.staffs);
     });
   };
@@ -102,7 +113,7 @@ const CreateAnonymousGrievance = () => {
                 className={
                   "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" +
                   (errors.grievanceType
-                    ? " border-red-500 dark:border-red-500"
+                    ? "border-red-500 dark:border-red-500"
                     : "")
                 }
               >
@@ -146,7 +157,10 @@ const CreateAnonymousGrievance = () => {
                 </p>
               )}
             </div>
-            {selectedDept && (
+            {loadingStaffList && (
+              <ClipLoaderWithText text="Fetching staffs..." />
+            )}
+            {selectedDept && !loadingStaffList && (
               <div className="mb-6">
                 <label className="block mb-2 text-xl font-medium">
                   Staff to assign
@@ -174,48 +188,23 @@ const CreateAnonymousGrievance = () => {
                 )}
               </div>
             )}
-            <div>
-              {errorMsg && (
-                <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-                  {errorMsg}
-                </p>
-              )}
-            </div>
+            <div>{errorMsg && <DangerAlert alertContent={errorMsg} />}</div>
             <div className="mb-6">
-              <button
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                type="submit"
-              >
-                Raise Grievance
-              </button>
+              {creatingGrievance ? (
+                <ClipLoaderWithText text="Creating grievance..." />
+              ) : (
+                <button
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  type="submit"
+                >
+                  Raise Grievance
+                </button>
+              )}
             </div>
           </form>
         ) : (
           <div>
-            <div
-              className="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-700 dark:text-green-400"
-              role="alert"
-            >
-              <svg
-                aria-hidden="true"
-                className="flex-shrink-0 inline w-5 h-5 mr-3"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-              <span className="sr-only">Info</span>
-              <div>
-                <span className="font-medium">
-                  Your grievance has been raised successfully
-                </span>
-              </div>
-            </div>
+            <SuccessAlert alertContent="Your grievance has been raised successfully." />
             <p className="text-3xl my-3">
               Tracking ID: <span className="font-bold">{trackingId}</span>{" "}
               <span

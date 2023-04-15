@@ -39,7 +39,7 @@ const getAnonymousGrievance = async (req, res) => {
     } else {
       const { trackingId } = req.params;
       grievance = await AnonymousGrievance.findOne({ trackingId })
-        .populate("grievanceStatus", "title")
+        .populate("grievanceStatus", ["title", "description"])
         .populate("grievanceType", "name")
         .populate("staffAssigned", ["name", "designation"]);
     }

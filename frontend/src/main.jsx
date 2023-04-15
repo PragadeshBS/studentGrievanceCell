@@ -29,6 +29,8 @@ import ViewStaffs from "./pages/admin/staff/ViewStaffs";
 import ViewStaffDetails from "./pages/admin/staff/ViewStaffDetails";
 import ApproveStaffs from "./pages/admin/staff/ApproveStaffs";
 import "./index.css";
+// react tool-tip css
+import "react-tooltip/dist/react-tooltip.css";
 
 const router = createBrowserRouter([
   {
