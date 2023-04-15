@@ -6,7 +6,7 @@ import ClipLoaderWithText from "../../../components/loaders/ClipLoaderWithText";
 import InfoAlert from "../../../components/alerts/InfoAlert";
 import { BsInfoCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
-import PrimaryButton from "../../../components/buttons/primaryButton";
+import PrimaryButton from "../../../components/buttons/PrimaryButton";
 import DangerButton from "../../../components/buttons/DangerButton";
 import moment from "moment";
 
