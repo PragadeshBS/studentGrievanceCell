@@ -4,7 +4,6 @@ import { useAuth } from "../../context/AuthContext";
 const staffNavLinks = ({ closeNavbar }) => {
   const navigate = useNavigate();
   const auth = useAuth();
-  console.log(auth);
   const handleClick = (e) => {
     e.preventDefault();
     closeNavbar();

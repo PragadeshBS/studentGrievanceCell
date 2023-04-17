@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import StaffGrievanceCard from "../../../components/grievance/staff/StaffGrievanceCard";
+import StaffAnonGrievanceCard from "../../../components/grievance/staff/StaffAnonGrievanceCard";
+import HashLoaderWithText from "../../../components/loaders/HashLoaderWithText";
 
 const ViewAssignedGrievances = () => {
   const [loading, setLoading] = useState(true);
@@ -16,35 +18,41 @@ const ViewAssignedGrievances = () => {
     });
   }, []);
   return (
-    <div>
-      <h1>Grievances assigned to you</h1>
-      {loading && <p>Loading grievances...</p>}
-      <ul>
-        {grievances.map((grievance) => (
-          <li key={grievance._id}>
-            <Link to={`/staff/grievances/view/assigned/${grievance._id}`}>
-              <h3>{grievance.title}</h3>
-            </Link>
-            <p>{grievance.description}</p>
-            <p>{grievance.grievanceStatus.title}</p>
-            <p>{grievance.grievanceType.name}</p>
-            <p>{grievance.student.name}</p>
-          </li>
-        ))}
-      </ul>
-      <h1>Anonymous Grievances</h1>
-      <ul>
-        {anonymousGrievances.map((grievance) => (
-          <li key={grievance._id}>
-            <Link to={`/staff/grievances/view/assigned/anonymous/${grievance._id}`}>
-              <h3>{grievance.title}</h3>
-            </Link>
-            <p>{grievance.description}</p>
-            <p>{grievance.grievanceStatus.title}</p>
-            <p>{grievance.grievanceType.name}</p>
-          </li>
-        ))}
-      </ul>
+    <div className="container mx-auto pb-5">
+      <div className="px-3">
+        <h1 className="text-4xl font-extrabold my-5">
+          Grievances assigned to you
+        </h1>
+        {loading ? (
+          <div className="flex mt-10 pt-10 justify-center">
+            <div>
+              <HashLoaderWithText
+                text="Loading  grievances..."
+                textClass="text-xl m-3"
+                size={65}
+              />
+            </div>
+          </div>
+        ) : (
+          <div>
+            <h1 className="text-2xl mb-2">Regular Grievances</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              {grievances.map((grievance) => (
+                <StaffGrievanceCard key={grievance._id} grievance={grievance} />
+              ))}
+            </div>
+            <h1 className="text-2xl mt-5 mb-2">Anonymous Grievances</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              {anonymousGrievances.map((grievance) => (
+                <StaffAnonGrievanceCard
+                  key={grievance._id}
+                  anonymousGrievance={grievance}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

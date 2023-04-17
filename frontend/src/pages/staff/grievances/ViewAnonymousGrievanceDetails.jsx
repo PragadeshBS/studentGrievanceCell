@@ -46,62 +46,64 @@ const ViewAnonymousGrievanceDetails = () => {
   }, []);
   if (loading) return <p>Loading grievance...</p>;
   return (
-    <div>
-      <h1>{grievance.title}</h1>
-      <p>{grievance.createdAt}</p>
-      <p>
-        Sentiment:{" "}
-        {sentiment.positive > sentiment.negative
-          ? "Positive " + sentiment.positive + "%"
-          : "Negative " + sentiment.negative + "%"}
-      </p>
-      <p>{grievance.description}</p>
-      <p>Status: {grievance.grievanceStatus.title}</p>
-      <p>{grievance.grievanceType.name}</p>
-      <h2>Comments</h2>
-      {comments.map((comment) => (
-        <div key={comment._id}>
-          <p>{comment.comment}</p>
-          <p>{comment.createdAt}</p>
-          <p>
-            {comment.authorType === "staff"
-              ? grievance.staffAssigned.name
-              : comment.authorType === "admin"
-              ? "Admin"
-              : "Anonymous"}
-          </p>
-        </div>
-      ))}
-      {grievance.grievanceStatus.title !== "Closed" && (
-        <form>
-          <div>
-            <textarea
-              placeholder="comment"
-              {...register("comment", {
-                required: "A comment is required",
-              })}
-            />
+    <div className="container mx-auto flex jusitfy-center">
+      <div className="flex-grow max-w-3xl px-3">
+        <h1>{grievance.title}</h1>
+        <p>{grievance.createdAt}</p>
+        <p>
+          Sentiment:{" "}
+          {sentiment.positive > sentiment.negative
+            ? "Positive " + sentiment.positive + "%"
+            : "Negative " + sentiment.negative + "%"}
+        </p>
+        <p>{grievance.description}</p>
+        <p>Status: {grievance.grievanceStatus.title}</p>
+        <p>{grievance.grievanceType.name}</p>
+        <h2>Comments</h2>
+        {comments.map((comment) => (
+          <div key={comment._id}>
+            <p>{comment.comment}</p>
+            <p>{comment.createdAt}</p>
+            <p>
+              {comment.authorType === "staff"
+                ? grievance.staffAssigned.name
+                : comment.authorType === "admin"
+                ? "Admin"
+                : "Anonymous"}
+            </p>
           </div>
-          {errors.comment && <p>{errors.comment.message}</p>}
-          <button type="button" onClick={addComment}>
-            Add comment
-          </button>
-        </form>
-      )}
-      <div>
-        {(grievance.grievanceStatus.title === "Assigned" ||
-          grievance.grievanceStatus.title === "Reopened") && (
-          <button type="button" onClick={() => modifyStatus("In Progress")}>
-            Mark as in progress
-          </button>
+        ))}
+        {grievance.grievanceStatus.title !== "Closed" && (
+          <form>
+            <div>
+              <textarea
+                placeholder="comment"
+                {...register("comment", {
+                  required: "A comment is required",
+                })}
+              />
+            </div>
+            {errors.comment && <p>{errors.comment.message}</p>}
+            <button type="button" onClick={addComment}>
+              Add comment
+            </button>
+          </form>
         )}
-        {(grievance.grievanceStatus.title === "Assigned" ||
-          grievance.grievanceStatus.title == "In Progress" ||
-          grievance.grievanceStatus.title === "Reopened") && (
-          <button type="button" onClick={() => modifyStatus("Resolved")}>
-            Mark as resolved
-          </button>
-        )}
+        <div>
+          {(grievance.grievanceStatus.title === "Assigned" ||
+            grievance.grievanceStatus.title === "Reopened") && (
+            <button type="button" onClick={() => modifyStatus("In Progress")}>
+              Mark as in progress
+            </button>
+          )}
+          {(grievance.grievanceStatus.title === "Assigned" ||
+            grievance.grievanceStatus.title == "In Progress" ||
+            grievance.grievanceStatus.title === "Reopened") && (
+            <button type="button" onClick={() => modifyStatus("Resolved")}>
+              Mark as resolved
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

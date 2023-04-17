@@ -31,6 +31,7 @@ import ApproveStaffs from "./pages/admin/staff/ApproveStaffs";
 import "./index.css";
 // react tool-tip css
 import "react-tooltip/dist/react-tooltip.css";
+import AuthProtect from "./pages/auth/AuthProtect";
 
 const router = createBrowserRouter([
   {
@@ -57,28 +58,34 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "auth/login/",
+        path: "auth",
+        element: <AuthProtect />,
         children: [
           {
-            path: "staff",
-            element: <StaffLogin />,
+            path: "login",
+            children: [
+              {
+                path: "staff",
+                element: <StaffLogin />,
+              },
+              {
+                path: "student",
+                element: <StudentLogin />,
+              },
+            ],
           },
           {
-            path: "student",
-            element: <StudentLogin />,
-          },
-        ],
-      },
-      {
-        path: "auth/register/",
-        children: [
-          {
-            path: "staff",
-            element: <StaffRegister />,
-          },
-          {
-            path: "student",
-            element: <StudentRegister />,
+            path: "register",
+            children: [
+              {
+                path: "staff",
+                element: <StaffRegister />,
+              },
+              {
+                path: "student",
+                element: <StudentRegister />,
+              },
+            ],
           },
         ],
       },

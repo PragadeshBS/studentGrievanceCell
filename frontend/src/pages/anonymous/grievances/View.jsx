@@ -162,7 +162,7 @@ const TrackAnonymousGrievance = () => {
                     }`}
                   >
                     <div
-                      className={`border rounded p-2 divide-y divide-slate-500 dark:divide-slate-50 
+                      className={`border rounded-lg p-2 divide-y divide-slate-500 dark:divide-slate-50 
                       ${
                         comment.authorType === "anonymous"
                           ? "bg-purple-300 dark:bg-purple-600"
