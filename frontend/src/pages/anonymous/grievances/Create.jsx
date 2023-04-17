@@ -56,7 +56,7 @@ const CreateAnonymousGrievance = () => {
   };
   return (
     <div className="container mx-auto flex justify-center">
-      <div className="flex-grow max-w-3xl px-3">
+      <div className="flex-grow max-w-5xl px-3">
         <h1 className="text-4xl font-extrabold my-5 text-center">
           Create Anonymous Grievance
         </h1>

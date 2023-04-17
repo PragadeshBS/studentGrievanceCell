@@ -35,18 +35,23 @@ const ViewGrievanceDetailsStaff = () => {
       });
   };
   useEffect(() => {
-    axios.get("/api/grievance/" + grievanceId).then((res) => {
-      setGrievance(res.data.grievance);
-      setSentiment(res.data.sentiment);
-      setLoading(false);
-    });
+    axios
+      .get("/api/grievance/" + grievanceId)
+      .then((res) => {
+        setGrievance(res.data.grievance);
+        setSentiment(res.data.sentiment);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     axios.get("/api/comment/" + grievanceId).then((res) => {
       setComments(res.data.comments);
     });
   }, []);
   if (loading) return <p>Loading grievance...</p>;
   return (
-    <div>
+    <div className="container mx-auto pb-5 px-3">
       <h1>{grievance.title}</h1>
       <p>{grievance.createdAt}</p>
       <p>

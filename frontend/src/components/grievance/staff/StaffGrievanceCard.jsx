@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { BsInfoCircle } from "react-icons/bs";
 import moment from "moment";
 
-const StaffGrievanceCard = ({ grievance }) => {
+const StaffGrievanceCard = ({ grievance, isAnonymousGrievance }) => {
   const maxDescriptionLength = 100;
   return (
     <div className="divide-y p-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-700 dark:border-gray-600">
@@ -11,7 +11,13 @@ const StaffGrievanceCard = ({ grievance }) => {
           {grievance.title}
         </h5>
         <p className="mb-2 text-sm font-medium tracking-tight text-gray-500 dark:text-gray-400">
-          {grievance.student.name} ({grievance.student.registerNo})
+          {isAnonymousGrievance ? (
+            "Anonymous"
+          ) : (
+            <>
+              {grievance.student.name} ({grievance.student.registerNo})
+            </>
+          )}
         </p>
         <div className="mb-2">
           <div className="text-sm">
@@ -33,7 +39,11 @@ const StaffGrievanceCard = ({ grievance }) => {
             : grievance.description}
         </p>
         <Link
-          to={"/staff/grievances/view/assigned/" + grievance._id}
+          to={
+            "/staff/grievances/view/assigned/" +
+            (isAnonymousGrievance ? "anonymous/" : "") +
+            grievance._id
+          }
           className="inline-flex items-center text-blue-600 hover:underline"
         >
           <BsInfoCircle className="me-2" />
@@ -44,13 +54,3 @@ const StaffGrievanceCard = ({ grievance }) => {
   );
 };
 export default StaffGrievanceCard;
-
-{
-  /* <Link to={`/staff/grievances/view/assigned/${grievance._id}`}>
-        <h3>{grievance.title}</h3>
-      </Link>
-      <p>{grievance.description}</p>
-      <p>{grievance.grievanceStatus.title}</p>
-      <p>{grievance.grievanceType.name}</p>
-      <p>{grievance.student.name}</p> */
-}

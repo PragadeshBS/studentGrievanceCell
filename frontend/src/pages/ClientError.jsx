@@ -1,14 +1,6 @@
-import { Link, useRouteError } from "react-router-dom";
-import ClientError from "./ClientError";
-import ServerError from "./ServerError";
-import NotFoundPage from "./NotFoundPage";
+import { Link } from "react-router-dom";
 
-export default function ErrorPage() {
-  const error = useRouteError();
-  if (error.status === 404) return <NotFoundPage />;
-  if (error.status >= 400 && error.status < 500)
-    return <ClientError error={error} />;
-  if (error.status >= 500) return <ServerError error={error} />;
+const ClientError = ({ error }) => {
   return (
     <div
       id="error-page"
@@ -29,4 +21,5 @@ export default function ErrorPage() {
       </div>
     </div>
   );
-}
+};
+export default ClientError;

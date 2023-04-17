@@ -20,7 +20,6 @@ import ViewGrievanceDetailsStudent from "./pages/student/grievance/ViewGrievance
 import StudentProfile from "./pages/student/Profile";
 import StaffProfile from "./pages/staff/Profile";
 import CreateAnonymousGrievance from "./pages/anonymous/grievances/Create";
-import TrackAnonymousGrievance from "./pages/anonymous/grievances/View";
 import ViewAnonymousGrievanceDetails from "./pages/staff/grievances/ViewAnonymousGrievanceDetails";
 import AdminProtect from "./pages/admin/AdminProtect";
 import ViewGrievancesAdmin from "./pages/admin/grievances/ViewGrievances";
@@ -29,9 +28,12 @@ import ViewStaffs from "./pages/admin/staff/ViewStaffs";
 import ViewStaffDetails from "./pages/admin/staff/ViewStaffDetails";
 import ApproveStaffs from "./pages/admin/staff/ApproveStaffs";
 import "./index.css";
+import AuthProtect from "./pages/auth/AuthProtect";
+
 // react tool-tip css
 import "react-tooltip/dist/react-tooltip.css";
-import AuthProtect from "./pages/auth/AuthProtect";
+import GetGrievanceId from "./pages/anonymous/grievances/GetGrievanceId";
+import TrackAnonymousGrievance from "./pages/anonymous/grievances/TrackAnonymousGrievance";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +53,10 @@ const router = createBrowserRouter([
               },
               {
                 path: "track",
+                element: <GetGrievanceId />,
+              },
+              {
+                path: "track/:trackingId",
                 element: <TrackAnonymousGrievance />,
               },
             ],

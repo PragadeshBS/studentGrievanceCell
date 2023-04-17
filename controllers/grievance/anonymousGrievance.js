@@ -33,7 +33,7 @@ const getAnonymousGrievance = async (req, res) => {
     let grievance;
     if (req.params.grievanceId) {
       grievance = await AnonymousGrievance.findById(req.params.grievanceId)
-        .populate("grievanceStatus", "title")
+        .populate("grievanceStatus", ["title", "description"])
         .populate("grievanceType", "name")
         .populate("staffAssigned", ["name", "designation"]);
     } else {
