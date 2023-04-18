@@ -44,8 +44,8 @@ ${
 }`}
             >
               <div className="text-xs">
-                {comment.authorType === "anonymous"
-                  ? "Anonymous"
+                {comment.authorType === "student"
+                  ? grievance.student.name
                   : comment.authorType === "admin"
                   ? "Admin"
                   : grievance.staffAssigned.name}

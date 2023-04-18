@@ -1,8 +1,8 @@
 import ClipLoader from "react-spinners/ClipLoader";
 
-const ClipLoaderWithText = ({ text }) => {
+const ClipLoaderWithText = ({ text, textClass }) => {
   return (
-    <div className="mb-6 flex gap-2 items-center">
+    <div className="mb-6 flex gap-4 items-center">
       <div>
         <ClipLoader
           cssOverride={{ display: "block", margin: "0 auto" }}
@@ -10,7 +10,7 @@ const ClipLoaderWithText = ({ text }) => {
           className="mb-6"
         />
       </div>
-      <div>{text}</div>
+      <div className={textClass}>{text}</div>
     </div>
   );
 };

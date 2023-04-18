@@ -40,11 +40,6 @@ router.get(
 router.get("/:grievanceId", protect, getGrievance);
 
 // modify a grievance status
-router.patch(
-  "/status/:grievanceId",
-  protect,
-  protectStaffOrAdmin,
-  modifyGrievanceStatus
-);
+router.patch("/status/:grievanceId", protect, modifyGrievanceStatus);
 
 module.exports = router;

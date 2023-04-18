@@ -107,7 +107,10 @@ const getGrievance = async (req, res) => {
     })
       .populate("grievanceType", "name")
       .populate("grievanceStatus", "title")
-      .populate("student", ["name", "registerNo"])
+      .populate({
+        path: "student",
+        populate: ["name", "department", "registerNo"],
+      })
       .populate("staffAssigned", ["name", "designation"]);
     if (!grievance) {
       return res.status(404).json({

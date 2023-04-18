@@ -2,26 +2,33 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import Description from "../../../components/grievance/regular/Description";
+import ClipLoaderWithText from "../../../components/loaders/ClipLoaderWithText";
+import Comments from "../../../components/grievance/regular/Comments";
+import SuccessButton from "../../../components/buttons/SuccessButton";
 
 const ViewGrievanceDetailsStaff = () => {
   const [loading, setLoading] = useState(true);
   const [grievance, setGrievance] = useState({});
   const [sentiment, setSentiment] = useState({});
   const [comments, setComments] = useState([]);
+  const [addingComment, setAddingComment] = useState(false);
   const { grievanceId } = useParams();
   const {
     register,
-    getValues,
+    handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const addComment = () => {
+  const addComment = (data) => {
+    setAddingComment(true);
     axios
       .post("/api/comment/" + grievanceId, {
-        comment: getValues("comment"),
+        comment: data.comment,
       })
       .then((res) => {
         setComments([...comments, res.data.comment]);
+        setAddingComment(false);
         reset();
       });
   };
@@ -38,6 +45,7 @@ const ViewGrievanceDetailsStaff = () => {
     axios
       .get("/api/grievance/" + grievanceId)
       .then((res) => {
+        console.log(res.data.grievance);
         setGrievance(res.data.grievance);
         setSentiment(res.data.sentiment);
         setLoading(false);
@@ -49,67 +57,47 @@ const ViewGrievanceDetailsStaff = () => {
       setComments(res.data.comments);
     });
   }, []);
-  if (loading) return <p>Loading grievance...</p>;
   return (
     <div className="container mx-auto pb-5 px-3">
-      <h1>{grievance.title}</h1>
-      <p>{grievance.createdAt}</p>
-      <p>
-        Sentiment:{" "}
-        {sentiment.positive > sentiment.negative
-          ? "Positive " + sentiment.positive + "%"
-          : "Negative " + sentiment.negative + "%"}
-      </p>
-      <p>{grievance.description}</p>
-      <p>Status: {grievance.grievanceStatus.title}</p>
-      <p>{grievance.grievanceType.name}</p>
-      <p>{grievance.student.name}</p>
-      <p>{grievance.student.registerNo}</p>
-      <h2>Comments</h2>
-      {comments.map((comment) => (
-        <div key={comment._id}>
-          <p>{comment.comment}</p>
-          <p>{comment.createdAt}</p>
-          <p>
-            {comment.authorType === "staff"
-              ? grievance.staffAssigned.name
-              : comment.authorType === "admin"
-              ? "Admin"
-              : grievance.student.name}
-          </p>
-        </div>
-      ))}
-      {grievance.grievanceStatus.title !== "Closed" && (
-        <form>
+      {loading ? (
+        <div className="flex mt-10 pt-10 justify-center">
           <div>
-            <textarea
-              placeholder="comment"
-              {...register("comment", {
-                required: "A comment is required",
-              })}
+            <ClipLoaderWithText
+              text={"Fetching grievance details..."}
+              textClass="text-2xl"
             />
           </div>
-          {errors.comment && <p>{errors.comment.message}</p>}
-          <button type="button" onClick={addComment}>
-            Add comment
-          </button>
-        </form>
+        </div>
+      ) : (
+        <div className="mt-3">
+          <Description grievance={grievance} sentiment={sentiment} />
+          <Comments
+            comments={comments}
+            grievance={grievance}
+            register={register}
+            addComment={addComment}
+            addingComment={addingComment}
+            errors={errors}
+            handleSubmit={handleSubmit}
+            userType="staff"
+          />
+          <div>
+            {(grievance.grievanceStatus.title === "Assigned" ||
+              grievance.grievanceStatus.title === "Reopened") && (
+              <SuccessButton onClick={() => modifyStatus("In Progress")}>
+                Mark as in progress
+              </SuccessButton>
+            )}
+            {(grievance.grievanceStatus.title === "Assigned" ||
+              grievance.grievanceStatus.title == "In Progress" ||
+              grievance.grievanceStatus.title === "Reopened") && (
+              <SuccessButton onClick={() => modifyStatus("Resolved")}>
+                Mark as resolved
+              </SuccessButton>
+            )}
+          </div>
+        </div>
       )}
-      <div>
-        {(grievance.grievanceStatus.title === "Assigned" ||
-          grievance.grievanceStatus.title === "Reopened") && (
-          <button type="button" onClick={() => modifyStatus("In Progress")}>
-            Mark as in progress
-          </button>
-        )}
-        {(grievance.grievanceStatus.title === "Assigned" ||
-          grievance.grievanceStatus.title == "In Progress" ||
-          grievance.grievanceStatus.title === "Reopened") && (
-          <button type="button" onClick={() => modifyStatus("Resolved")}>
-            Mark as resolved
-          </button>
-        )}
-      </div>
     </div>
   );
 };

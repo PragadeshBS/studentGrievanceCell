@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import DangerButton from "../../../components/buttons/DangerButton";
 import { useParams } from "react-router-dom";
@@ -9,7 +9,6 @@ import Description from "../../../components/grievance/anonymous/Description";
 
 const TrackAnonymousGrievance = () => {
   const { trackingId } = useParams();
-  const commentRef = useRef();
   const [loading, setLoading] = useState(true);
   const [grievance, setGrievance] = useState(null);
   const [addingComment, setAddingComment] = useState(false);
@@ -70,7 +69,6 @@ const TrackAnonymousGrievance = () => {
             <Comments
               userType="anonymous"
               comments={comments}
-              commentRef={commentRef}
               grievance={grievance}
               register={register}
               addComment={addComment}

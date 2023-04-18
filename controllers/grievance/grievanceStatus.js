@@ -35,7 +35,10 @@ const modifyGrievanceStatus = async (req, res) => {
       .populate("grievanceStatus", "title")
       .populate("grievanceType", "name")
       .populate("staffAssigned", ["name", "designation"])
-      .populate("student", ["name", "registerNo"]);
+      .populate({
+        path: "student",
+        populate: ["name", "department", "registerNo"],
+      });
     res.status(200).json({
       success: false,
       message: "Grievance status updated successfully",
