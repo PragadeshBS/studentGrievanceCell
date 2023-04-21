@@ -1,11 +1,24 @@
-import { Link } from "react-router-dom";
-import { BsInfoCircle } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
-const StaffGrievanceCard = ({ grievance, isAnonymousGrievance }) => {
+const StaffGrievanceCard = ({ grievance, isAnonymousGrievance, userType }) => {
+  const navigate = useNavigate();
+  const redirectToGrievance = () => {
+    navigate(
+      (userType === "admin"
+        ? "/admin/grievances/view/"
+        : "/staff/grievances/view/assigned/") +
+        (isAnonymousGrievance ? "anonymous/" : "") +
+        grievance._id
+    );
+  };
+
   const maxDescriptionLength = 100;
   return (
-    <div className="divide-y p-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-700 dark:border-gray-600">
+    <div
+      className="divide-y p-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-700 dark:border-gray-600 cursor-pointer"
+      onClick={redirectToGrievance}
+    >
       <div>
         <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
           {grievance.title}
@@ -38,17 +51,9 @@ const StaffGrievanceCard = ({ grievance, isAnonymousGrievance }) => {
             ? grievance.description.substring(0, maxDescriptionLength) + "..."
             : grievance.description}
         </p>
-        <Link
-          to={
-            "/staff/grievances/view/assigned/" +
-            (isAnonymousGrievance ? "anonymous/" : "") +
-            grievance._id
-          }
-          className="inline-flex items-center text-blue-600 hover:underline"
-        >
-          <BsInfoCircle className="me-2" />
-          More info
-        </Link>
+        {userType === "admin" && (
+          <div>Staff Assigned: {grievance.staffAssigned.name}</div>
+        )}
       </div>
     </div>
   );

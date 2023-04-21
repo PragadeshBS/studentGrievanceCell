@@ -1,26 +1,32 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
-import StaffGrievanceCard from "../../../components/grievance/staff/StaffGrievanceCard";
-import HashLoaderWithText from "../../../components/loaders/HashLoaderWithText";
+import { useEffect, useState } from "react";
+import StaffGrievanceCard from "./StaffGrievanceCard";
+import HashLoaderWithText from "../../loaders/HashLoaderWithText";
 
-const ViewAssignedGrievances = () => {
+const GrievanceCards = ({ userType }) => {
   const [loading, setLoading] = useState(true);
   const [grievances, setGrievances] = useState([]);
   const [anonymousGrievances, setAnonymousGrievances] = useState([]);
+  const regularGrievancesApi =
+    userType === "admin"
+      ? "/api/admin/grievances/view"
+      : "/api/grievance/staff";
+  const anonymousGrievancesApi =
+    userType === "admin"
+      ? "/api/admin/anonymous-grievances/view"
+      : "/api/grievance/staff/anonymous";
   useEffect(() => {
-    axios.get("/api/grievance/staff").then((res) => {
-      axios.get("/api/grievance/staff/anonymous").then((res) => {
+    axios.get(regularGrievancesApi).then((res) => {
+      setGrievances(res.data.grievances);
+      axios.get(anonymousGrievancesApi).then((res) => {
         setLoading(false);
         setAnonymousGrievances(res.data.grievances);
       });
-      setGrievances(res.data.grievances);
     });
   }, []);
   return (
     <div className="container mx-auto pb-5 px-3">
-      <h1 className="text-4xl font-extrabold my-5">
-        Grievances assigned to you
-      </h1>
+      <h1 className="text-4xl font-extrabold my-5">All Grievances</h1>
       {loading ? (
         <div className="flex mt-10 pt-10 justify-center">
           <div>
@@ -37,9 +43,9 @@ const ViewAssignedGrievances = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {grievances.map((grievance) => (
               <StaffGrievanceCard
-                key={grievance._id}
-                isAnonymousGrievance={false}
                 grievance={grievance}
+                key={grievance._id}
+                userType={userType}
               />
             ))}
           </div>
@@ -47,9 +53,10 @@ const ViewAssignedGrievances = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {anonymousGrievances.map((grievance) => (
               <StaffGrievanceCard
-                key={grievance._id}
-                isAnonymousGrievance={true}
                 grievance={grievance}
+                key={grievance._id}
+                userType={userType}
+                isAnonymousGrievance={true}
               />
             ))}
           </div>
@@ -58,4 +65,4 @@ const ViewAssignedGrievances = () => {
     </div>
   );
 };
-export default ViewAssignedGrievances;
+export default GrievanceCards;

@@ -7,8 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://sgc.cyclic.app/",
-        // target: "http://localhost:3000/",
+        // target: "https://sgc.cyclic.app/",
+        target: "http://localhost:3000/",
         secure: false,
         changeOrigin: true,
         configure: (proxy, _options) => {

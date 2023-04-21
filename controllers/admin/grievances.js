@@ -7,7 +7,7 @@ const getAllGrievances = async (req, res) => {
     const grievances = await Grievance.find()
       .populate({
         path: "student",
-        select: "name email rollNumber department",
+        select: "name email registerNo department",
         populate: { path: "department" },
       })
       .populate({

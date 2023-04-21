@@ -14,7 +14,6 @@ import Logout from "./pages/auth/Logout";
 import StudentProtect from "./pages/student/StudentProtect";
 import ViewGrievances from "./pages/student/grievance/ViewGrievances";
 import StaffProtect from "./pages/staff/StaffProtect";
-import ViewAssignedGrievances from "./pages/staff/grievances/ViewAssigned";
 import ViewGrievanceDetailsStaff from "./pages/staff/grievances/ViewGrievanceDetails";
 import ViewGrievanceDetailsStudent from "./pages/student/grievance/ViewGrievanceDetails";
 import StudentProfile from "./pages/student/Profile";
@@ -22,7 +21,6 @@ import StaffProfile from "./pages/staff/Profile";
 import CreateAnonymousGrievance from "./pages/anonymous/grievances/Create";
 import ViewAnonymousGrievanceDetails from "./pages/staff/grievances/ViewAnonymousGrievanceDetails";
 import AdminProtect from "./pages/admin/AdminProtect";
-import ViewGrievancesAdmin from "./pages/admin/grievances/ViewGrievances";
 import ViewDeptStaffs from "./pages/admin/staff/ViewDeptStaffs";
 import ViewStaffs from "./pages/admin/staff/ViewStaffs";
 import ViewStaffDetails from "./pages/admin/staff/ViewStaffDetails";
@@ -34,6 +32,7 @@ import AuthProtect from "./pages/auth/AuthProtect";
 import "react-tooltip/dist/react-tooltip.css";
 import GetGrievanceId from "./pages/anonymous/grievances/GetGrievanceId";
 import TrackAnonymousGrievance from "./pages/anonymous/grievances/TrackAnonymousGrievance";
+import GrievanceCards from "./components/grievance/staff/GrievanceCards";
 
 const router = createBrowserRouter([
   {
@@ -133,7 +132,10 @@ const router = createBrowserRouter([
           {
             path: "grievances",
             children: [
-              { path: "view/assigned", element: <ViewAssignedGrievances /> },
+              {
+                path: "view/assigned",
+                element: <GrievanceCards userType="staff" />,
+              },
               {
                 path: "view/assigned/:grievanceId",
                 element: <ViewGrievanceDetailsStaff />,
@@ -178,7 +180,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "view/all",
-                element: <ViewGrievancesAdmin />,
+                element: <GrievanceCards userType="admin" />,
               },
               {
                 path: "view/:grievanceId",

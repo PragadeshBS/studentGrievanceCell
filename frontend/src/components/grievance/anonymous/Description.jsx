@@ -8,8 +8,11 @@ const Description = ({ grievance, sentiment }) => {
       <div className="mb-2">
         <div className="text-4xl">{grievance.title}</div>
         <div className="text-xs">
-          <span className="font-bold">Created: </span>
-          {moment(grievance.createdAt).format("h:mm a, DD/MM/YYYY")}
+          <div className="my-1">Anonymous grievance</div>
+          <div>
+            <span className="font-bold">Created: </span>
+            {moment(grievance.createdAt).format("h:mm a, DD/MM/YYYY")}
+          </div>
         </div>
       </div>
       <hr />
