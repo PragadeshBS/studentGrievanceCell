@@ -8,7 +8,7 @@ import SuccessButton from "../../../components/buttons/SuccessButton";
 import PurpleButton from "../../../components/buttons/PurpleButton";
 import ClipLoaderWithText from "../../../components/loaders/ClipLoaderWithText";
 
-const ViewAnonymousGrievanceDetails = () => {
+const ViewAnonymousGrievanceDetails = ({ userType }) => {
   const [loading, setLoading] = useState(true);
   const [grievance, setGrievance] = useState({});
   const [sentiment, setSentiment] = useState({});
@@ -67,7 +67,7 @@ const ViewAnonymousGrievanceDetails = () => {
         <div className="mt-3">
           <Description grievance={grievance} sentiment={sentiment} />
           <Comments
-            userType="staff"
+            userType={userType || "staff"}
             comments={comments}
             grievance={grievance}
             register={register}

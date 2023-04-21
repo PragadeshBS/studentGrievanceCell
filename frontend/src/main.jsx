@@ -186,7 +186,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "view/anonymous/:grievanceId",
-                element: <ViewAnonymousGrievanceDetails />,
+                element: <ViewAnonymousGrievanceDetails userType="admin" />,
               },
             ],
           },
