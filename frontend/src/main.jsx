@@ -67,6 +67,10 @@ const router = createBrowserRouter([
         element: <AuthProtect />,
         children: [
           {
+            path: "logout",
+            element: <Logout />,
+          },
+          {
             path: "login",
             children: [
               {
@@ -93,10 +97,6 @@ const router = createBrowserRouter([
             ],
           },
         ],
-      },
-      {
-        path: "auth/logout",
-        element: <Logout />,
       },
       {
         // parent route for all protected routes of students

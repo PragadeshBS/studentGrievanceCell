@@ -32,7 +32,7 @@ const GrievanceCards = ({ userType }) => {
           <div>
             <HashLoaderWithText
               text="Loading  grievances..."
-              textClass="text-xl m-3"
+              textclassName="text-xl m-3"
               size={65}
             />
           </div>

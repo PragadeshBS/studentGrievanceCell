@@ -64,7 +64,7 @@ const ViewGrievanceDetailsStaff = () => {
           <div>
             <ClipLoaderWithText
               text={"Fetching grievance details..."}
-              textClass="text-2xl"
+              textclassName="text-2xl"
             />
           </div>
         </div>

@@ -24,7 +24,7 @@ const StaffProfile = () => {
           <ClipLoaderWithText
             size={40}
             text="Fetching your profile info..."
-            textClass="text-3xl"
+            textclassName="text-3xl"
           />
         </div>
       ) : (
