@@ -13,7 +13,6 @@ import HomePage from "./pages/Home";
 import Logout from "./pages/auth/Logout";
 import StudentProtect from "./pages/student/StudentProtect";
 import StaffProtect from "./pages/staff/StaffProtect";
-import ViewGrievanceDetailsStaff from "./pages/staff/grievances/ViewGrievanceDetails";
 import ViewGrievanceDetailsStudent from "./pages/student/grievance/ViewGrievanceDetails";
 import StudentProfile from "./pages/student/Profile";
 import StaffProfile from "./pages/staff/Profile";
@@ -33,6 +32,7 @@ import GetGrievanceId from "./pages/anonymous/grievances/GetGrievanceId";
 import TrackAnonymousGrievance from "./pages/anonymous/grievances/TrackAnonymousGrievance";
 import GrievanceCards from "./components/grievance/staff/GrievanceCards";
 import StudentGrievanceCards from "./components/grievance/student/StudentGrievanceCards";
+import StaffGrievanceDetails from "./components/grievance/staff/StaffGrievanceDetails";
 
 const router = createBrowserRouter([
   {
@@ -138,7 +138,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "view/assigned/:grievanceId",
-                element: <ViewGrievanceDetailsStaff />,
+                element: <StaffGrievanceDetails />,
               },
               {
                 path: "view/assigned/anonymous/:grievanceId",
@@ -184,7 +184,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "view/:grievanceId",
-                element: <ViewGrievanceDetailsStaff />,
+                element: <StaffGrievanceDetails userType="admin" />,
               },
               {
                 path: "view/anonymous/:grievanceId",
