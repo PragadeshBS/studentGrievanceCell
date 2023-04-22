@@ -12,7 +12,6 @@ import StudentRegister from "./pages/auth/register/Student";
 import HomePage from "./pages/Home";
 import Logout from "./pages/auth/Logout";
 import StudentProtect from "./pages/student/StudentProtect";
-import ViewGrievances from "./pages/student/grievance/ViewGrievances";
 import StaffProtect from "./pages/staff/StaffProtect";
 import ViewGrievanceDetailsStaff from "./pages/staff/grievances/ViewGrievanceDetails";
 import ViewGrievanceDetailsStudent from "./pages/student/grievance/ViewGrievanceDetails";
@@ -33,6 +32,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import GetGrievanceId from "./pages/anonymous/grievances/GetGrievanceId";
 import TrackAnonymousGrievance from "./pages/anonymous/grievances/TrackAnonymousGrievance";
 import GrievanceCards from "./components/grievance/staff/GrievanceCards";
+import StudentGrievanceCards from "./components/grievance/student/StudentGrievanceCards";
 
 const router = createBrowserRouter([
   {
@@ -110,7 +110,7 @@ const router = createBrowserRouter([
           {
             path: "grievances",
             children: [
-              { path: "view", element: <ViewGrievances /> },
+              { path: "view", element: <StudentGrievanceCards /> },
               {
                 path: "view/:grievanceId",
                 element: <ViewGrievanceDetailsStudent />,
