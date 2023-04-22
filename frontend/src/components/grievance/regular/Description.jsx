@@ -27,7 +27,7 @@ const Description = ({ grievance, sentiment }) => {
             : "Negative " + sentiment.negative + "%"}
         </div>
       )}
-      <div className="mb-4">
+      <div className={`mb-4 ${sentiment ? "" : "mt-2"}`}>
         <span className="font-bold">Description: </span>
         {grievance.description}
       </div>

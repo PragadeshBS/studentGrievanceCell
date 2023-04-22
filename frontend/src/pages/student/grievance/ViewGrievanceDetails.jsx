@@ -2,25 +2,32 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import Description from "../../../components/grievance/regular/Description";
+import Comments from "../../../components/grievance/regular/Comments";
+import SuccessButton from "../../../components/buttons/SuccessButton";
+import DangerButton from "../../../components/buttons/DangerButton";
 
 const ViewGrievanceDetailsStaff = () => {
   const [loading, setLoading] = useState(true);
   const [grievance, setGrievance] = useState({});
   const [comments, setComments] = useState([]);
+  const [addingComment, setAddingComment] = useState(false);
   const { grievanceId } = useParams();
   const {
     register,
-    getValues,
+    handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const addComment = () => {
+  const addComment = (data) => {
+    setAddingComment(true);
     axios
       .post("/api/comment/" + grievanceId, {
-        comment: getValues("comment"),
+        comment: data.comment,
       })
       .then((res) => {
         setComments([...comments, res.data.comment]);
+        setAddingComment(false);
         reset();
       });
   };
@@ -35,9 +42,8 @@ const ViewGrievanceDetailsStaff = () => {
   };
   useEffect(() => {
     axios.get("/api/grievance/" + grievanceId).then((res) => {
-      console.log(res.data.grievance);
-      setLoading(false);
       setGrievance(res.data.grievance);
+      setLoading(false);
     });
     axios.get("/api/comment/" + grievanceId).then((res) => {
       setComments(res.data.comments);
@@ -45,53 +51,29 @@ const ViewGrievanceDetailsStaff = () => {
   }, []);
   if (loading) return <p>Loading grievance...</p>;
   return (
-    <div>
-      <h1>{grievance.title}</h1>
-      <p>{grievance.description}</p>
-      <p>Status: {grievance.grievanceStatus.title}</p>
-      <p>{grievance.grievanceType.name}</p>
-      <p>{grievance.student.name}</p>
-      <p>{grievance.student.registerNo}</p>
+    <div className="container mx-auto px-3 pb-3">
+      <Description grievance={grievance} />
       <h2>Comments</h2>
-      {comments.map((comment) => (
-        <div key={comment._id}>
-          <p>{comment.comment}</p>
-          <p>{comment.createdAt}</p>
-          <p>
-            {comment.authorType === "student"
-              ? "You"
-              : comment.authorType === "admin"
-              ? "admin"
-              : grievance.staffAssigned.name}
-          </p>
-        </div>
-      ))}
-      {grievance.grievanceStatus.title !== "Closed" && (
-        <form>
-          <div>
-            <textarea
-              placeholder="comment"
-              {...register("comment", {
-                required: "A comment is required",
-              })}
-            />
-          </div>
-          {errors.comment && <p>{errors.comment.message}</p>}
-          <button type="button" onClick={addComment}>
-            Add comment
-          </button>
-        </form>
-      )}
+      <Comments
+        comments={comments}
+        grievance={grievance}
+        register={register}
+        addComment={addComment}
+        addingComment={addingComment}
+        errors={errors}
+        handleSubmit={handleSubmit}
+        userType="student"
+      />
       <div>
         {grievance.grievanceStatus.title === "Resolved" && (
-          <button type="button" onClick={() => modifyStatus("Reopened")}>
+          <DangerButton type="button" onClick={() => modifyStatus("Reopened")}>
             Reopen grievance
-          </button>
+          </DangerButton>
         )}
         {grievance.grievanceStatus.title !== "Closed" && (
-          <button type="button" onClick={() => modifyStatus("Closed")}>
+          <SuccessButton onClick={() => modifyStatus("Closed")}>
             Close grievance
-          </button>
+          </SuccessButton>
         )}
       </div>
     </div>
