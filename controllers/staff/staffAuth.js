@@ -100,6 +100,16 @@ const register = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    if (err.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: err.keyPattern.staffId
+          ? "Staff ID already exists"
+          : err.keyPattern.email
+          ? "Email already exists"
+          : "Phone number already exists",
+      });
+    }
     res.status(500).json({
       success: false,
       message: "Server Error",

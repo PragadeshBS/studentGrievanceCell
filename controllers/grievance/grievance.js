@@ -1,6 +1,8 @@
 const Grievance = require("../../models/Grievance");
+const Staff = require("../../models/Staff");
 const AnonymousGrievance = require("../../models/AnonymousGrievance");
 const { sentimentAnalysis } = require("../../utils/mlTasks");
+const nodemailer = require("nodemailer");
 
 // create a new grievance
 const addGrievance = async (req, res) => {
@@ -13,6 +15,26 @@ const addGrievance = async (req, res) => {
       student: req.user.userInfo._id,
       staffAssigned,
     });
+    const staffEmail = (
+      await Staff.findOne({
+        _id: staffAssigned,
+      }).select("email")
+    )["email"];
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PWD,
+      },
+    });
+    var mailOptions = {
+      from: process.env.MAIL_USERNAME,
+      to: staffEmail,
+      subject: "New Grievance assigned to you",
+      html: `<h1>Student Grievance Cell, Madras Institute of Technology</h1><p>A new grievance has been assigned to you.</p><p><b>Title:</b> ${grievance.title}</p><p><b>Description:</b> ${grievance.description}</p><p>
+      <a href="${process.env.WEB_URL}/staff/grievances/view/assigned/${grievance._id}">More info</a>`,
+    };
+    transporter.sendMail(mailOptions);
     res.status(201).json({
       success: true,
       message: "Grievance created successfully",

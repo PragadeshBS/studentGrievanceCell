@@ -33,6 +33,7 @@ import TrackAnonymousGrievance from "./pages/anonymous/grievances/TrackAnonymous
 import GrievanceCards from "./components/grievance/staff/GrievanceCards";
 import StudentGrievanceCards from "./components/grievance/student/StudentGrievanceCards";
 import StaffGrievanceDetails from "./components/grievance/staff/StaffGrievanceDetails";
+import StaffRegisterSuccess from "./pages/auth/register/StaffRegisterSuccess";
 
 const router = createBrowserRouter([
   {
@@ -88,7 +89,16 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "staff",
-                element: <StaffRegister />,
+                children: [
+                  {
+                    path: "",
+                    element: <StaffRegister />,
+                  },
+                  {
+                    path: "success",
+                    element: <StaffRegisterSuccess />,
+                  },
+                ],
               },
               {
                 path: "student",
