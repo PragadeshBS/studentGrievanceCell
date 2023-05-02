@@ -6,6 +6,7 @@ import Description from "../../../components/grievance/regular/Description";
 import Comments from "../../../components/grievance/regular/Comments";
 import SuccessButton from "../../../components/buttons/SuccessButton";
 import DangerButton from "../../../components/buttons/DangerButton";
+import ClipLoaderWithText from "../../../components/loaders/ClipLoaderWithText";
 
 const ViewGrievanceDetailsStaff = () => {
   const [loading, setLoading] = useState(true);
@@ -49,7 +50,17 @@ const ViewGrievanceDetailsStaff = () => {
       setComments(res.data.comments);
     });
   }, []);
-  if (loading) return <p>Loading grievance...</p>;
+  if (loading)
+    return (
+      <div className="flex mt-10 pt-10 justify-center">
+        <div>
+          <ClipLoaderWithText
+            text={"Fetching grievance details..."}
+            textclassName="text-2xl"
+          />
+        </div>
+      </div>
+    );
   return (
     <div className="container mx-auto px-3 pb-3">
       <Description grievance={grievance} />

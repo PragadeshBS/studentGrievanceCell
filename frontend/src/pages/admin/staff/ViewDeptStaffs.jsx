@@ -32,7 +32,7 @@ const ViewDeptStaffs = () => {
           Could not find staffs from this department
         </div>
       )}
-      {staffs.length > 0 && (
+      {!loading && staffs.length > 0 && (
         <div className="relative overflow-x-auto">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-200">
             <thead>
