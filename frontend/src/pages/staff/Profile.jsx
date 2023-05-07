@@ -9,7 +9,6 @@ const StaffProfile = () => {
     axios
       .get("/api/staff/profile")
       .then((res) => {
-        console.log(res.data.staff);
         setStaff(res.data.staff);
         setLoading(false);
       })

@@ -45,7 +45,6 @@ const ViewGrievanceDetailsStaff = () => {
     axios
       .get("/api/grievance/" + grievanceId)
       .then((res) => {
-        console.log(res.data.grievance);
         setGrievance(res.data.grievance);
         setSentiment(res.data.sentiment);
         setLoading(false);

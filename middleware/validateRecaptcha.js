@@ -3,7 +3,6 @@ const requestIp = require("request-ip");
 
 const vaildateRecaptcha = async (req, res, next) => {
   try {
-    console.log(req.headers);
     if (!req.body.recaptchaToken && !req.headers.recaptchatoken) {
       return res.status(400).json({
         success: false,
@@ -28,7 +27,6 @@ const vaildateRecaptcha = async (req, res, next) => {
       }
     );
     const recaptchaJson = await recaptchRes.json();
-    console.log(recaptchaJson);
     if (!recaptchaJson.success) {
       return res.status(400).json({
         success: false,
