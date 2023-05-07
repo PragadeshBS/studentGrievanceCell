@@ -5,8 +5,11 @@ import { useAuthDispatch } from "../../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import DangerAlert from "../../../components/alerts/DangerAlert";
 import ClipLoaderWithText from "../../../components/loaders/ClipLoaderWithText";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import ReCaptchaBranding from "../../../components/ReCaptchaBranding";
 
 const StaffLogin = () => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const authDispatch = useAuthDispatch();
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,11 +20,17 @@ const StaffLogin = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = ({ staffId, password }) => {
+  const onSubmit = async ({ staffId, password }) => {
     setLoading(true);
     setErrorMsg("");
+    if (!executeRecaptcha) {
+      setErrorMsg("Recaptcha not yet available");
+      setLoading(false);
+      return;
+    }
+    const recaptchaToken = await executeRecaptcha("staff_login");
     axios
-      .post("/api/staff/login", { staffId, password })
+      .post("/api/staff/login", { staffId, password, recaptchaToken })
       .then((res) => {
         if (res.data.message.indexOf("Staff logged in successfully") !== -1) {
           authDispatch({
@@ -120,6 +129,7 @@ const StaffLogin = () => {
             <Link to="/auth/register/staff">Register as a new staff</Link>
           </span>
         </small>
+        <ReCaptchaBranding />
       </div>
     </div>
   );

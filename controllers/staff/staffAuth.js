@@ -4,8 +4,8 @@ const { hashPassword, verifyPassword } = require("../../utils/hashPassword");
 const { createToken } = require("../../utils/userToken");
 
 const login = async (req, res) => {
-  const { staffId, password } = req.body;
   try {
+    const { staffId, password } = req.body;
     // check if staff is admin
     const admin = await Admin.findOne({ email: staffId });
     if (admin) {

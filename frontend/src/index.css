@@ -31,3 +31,8 @@ body {
 .hero-bg-content {
   position: relative;
 }
+
+/* hide the google recaptcha badge */
+.grecaptcha-badge {
+  visibility: hidden;
+}

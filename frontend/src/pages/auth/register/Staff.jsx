@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ClipLoaderWithText from "../../../components/loaders/ClipLoaderWithText";
+import ReCaptchaBranding from "../../../components/ReCaptchaBranding";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const StaffRegister = () => {
   const navigate = useNavigate();
-  const [successMsg, setSuccessMsg] = useState("");
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [departments, setDepartments] = useState([]);
@@ -15,16 +17,23 @@ const StaffRegister = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (staffDetails) => {
+  const onSubmit = async (staffDetails) => {
     if (staffDetails.password !== staffDetails.confirmPassword) {
       setErrorMsg("Passwords do not match");
       return;
     }
     setErrorMsg("");
     setLoading(true);
+    if (!executeRecaptcha) {
+      setErrorMsg("Recaptcha not available yet");
+      setLoading(false);
+      return;
+    }
+    const recaptchaToken = await executeRecaptcha("staff_register");
+    staffDetails.recaptchaToken = recaptchaToken;
     axios
       .post("/api/staff/register", staffDetails)
-      .then((res) => {
+      .then(() => {
         setLoading(false);
         navigate("/auth/register/staff/success");
       })
@@ -253,6 +262,7 @@ const StaffRegister = () => {
             )}
           </div>
         </form>
+        <ReCaptchaBranding />
       </div>
     </div>
   );

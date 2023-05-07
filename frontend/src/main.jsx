@@ -25,16 +25,17 @@ import ViewStaffDetails from "./pages/admin/staff/ViewStaffDetails";
 import ApproveStaffs from "./pages/admin/staff/ApproveStaffs";
 import "./index.css";
 import AuthProtect from "./pages/auth/AuthProtect";
-
-// react tool-tip css
-import "react-tooltip/dist/react-tooltip.css";
 import GetGrievanceId from "./pages/anonymous/grievances/GetGrievanceId";
 import TrackAnonymousGrievance from "./pages/anonymous/grievances/TrackAnonymousGrievance";
 import GrievanceCards from "./components/grievance/staff/GrievanceCards";
 import StudentGrievanceCards from "./components/grievance/student/StudentGrievanceCards";
 import StaffGrievanceDetails from "./components/grievance/staff/StaffGrievanceDetails";
 import StaffRegisterSuccess from "./pages/auth/register/StaffRegisterSuccess";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+// react tool-tip css
+import "react-tooltip/dist/react-tooltip.css";
 
+const reCaptchaKey = "6Ld9SeslAAAAAGHfrbWBXhZ1k6hATeYa-mQK9Ttw";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -212,7 +213,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <GoogleReCaptchaProvider reCaptchaKey={reCaptchaKey}>
+        <RouterProvider router={router} />
+      </GoogleReCaptchaProvider>
     </AuthProvider>
   </React.StrictMode>
 );

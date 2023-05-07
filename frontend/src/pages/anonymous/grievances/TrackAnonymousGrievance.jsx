@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DangerButton from "../../../components/buttons/DangerButton";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BarLoaderOnText from "../../../components/loaders/BarLoaderOnText";
 import Comments from "../../../components/grievance/anonymous/Comments";
 import { useForm } from "react-hook-form";
 import Description from "../../../components/grievance/anonymous/Description";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const TrackAnonymousGrievance = () => {
   const { trackingId } = useParams();
+  const navigate = useNavigate();
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const [loading, setLoading] = useState(true);
   const [grievance, setGrievance] = useState(null);
   const [addingComment, setAddingComment] = useState(false);
@@ -20,20 +23,34 @@ const TrackAnonymousGrievance = () => {
     formState: { errors },
   } = useForm();
   useEffect(() => {
-    axios
-      .get(`/api/anonymousGrievance/${trackingId}`)
-      .then((res) => {
-        setGrievance(res.data.grievance);
-        axios
-          .get("/api/comment/anonymous/" + res.data.grievance._id)
-          .then((res) => {
-            setComments(res.data.comments);
-            setLoading(false);
-          });
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+    const fetchGrievance = async () => {
+      if (!executeRecaptcha) {
+        navigate("/anonymous/grievances/track");
+        return;
+      }
+      const recaptchaToken = await executeRecaptcha(
+        "anonymous_grievance_track"
+      );
+      axios
+        .get(`/api/anonymousGrievance/${trackingId}`, {
+          headers: {
+            recaptchaToken,
+          },
+        })
+        .then((res) => {
+          setGrievance(res.data.grievance);
+          axios
+            .get("/api/comment/anonymous/" + res.data.grievance._id)
+            .then((res) => {
+              setComments(res.data.comments);
+              setLoading(false);
+            });
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    };
+    fetchGrievance();
   }, []);
   const addComment = (data) => {
     setAddingComment(true);

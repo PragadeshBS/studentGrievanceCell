@@ -4,9 +4,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuthDispatch } from "../../../context/AuthContext";
 import ClipLoaderWithText from "../../../components/loaders/ClipLoaderWithText";
+import ReCaptchaBranding from "../../../components/ReCaptchaBranding";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const StudentRegister = () => {
   const authDispatch = useAuthDispatch();
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,13 +19,20 @@ const StudentRegister = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (studentDetails) => {
+  const onSubmit = async (studentDetails) => {
     if (studentDetails.password !== studentDetails.confirmPassword) {
       setErrorMsg("Passwords do not match");
       return;
     }
     setErrorMsg("");
     setLoading(true);
+    if (!executeRecaptcha) {
+      setErrorMsg("Recaptcha not yet available");
+      setLoading(false);
+      return;
+    }
+    const recaptchaToken = await executeRecaptcha("student_register");
+    studentDetails.recaptchaToken = recaptchaToken;
     axios
       .post("/api/student/register", studentDetails)
       .then((res) => {
@@ -227,6 +237,7 @@ const StudentRegister = () => {
             )}
           </div>
         </form>
+        <ReCaptchaBranding />
       </div>
     </div>
   );

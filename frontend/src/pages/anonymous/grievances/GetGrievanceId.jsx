@@ -2,17 +2,29 @@ import { useState } from "react";
 import DangerAlert from "../../../components/alerts/DangerAlert";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ReCaptchaBranding from "../../../components/ReCaptchaBranding";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const GetGrievanceId = () => {
   const [trackingId, setTrackingId] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const onSubmit = (e) => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (!trackingId) return setError("Tracking ID is required");
     setError("");
+    if (!executeRecaptcha) {
+      setError("Recaptcha not yet available");
+      return;
+    }
+    const recaptchaToken = await executeRecaptcha("anonymous_grievance_track");
     axios
-      .get("/api/anonymousGrievance/" + trackingId)
+      .get("/api/anonymousGrievance/" + trackingId, {
+        headers: {
+          recaptchaToken,
+        },
+      })
       .then(() => {
         navigate("/anonymous/grievances/track/" + trackingId);
       })
@@ -49,6 +61,7 @@ const GetGrievanceId = () => {
               </button>
             </div>
           </form>
+          <ReCaptchaBranding />
         </div>
       </div>
     </div>

@@ -4,16 +4,13 @@ const {
   getAnonymousGrievance,
   modifyAnonymousGrievanceStatus,
 } = require("../controllers/grievance/anonymousGrievance");
-
-const protect = require("../middleware/auth");
-
-const { protectStaffOrAdmin } = require("../middleware/checkUserRole");
+const vaildateRecaptcha = require("../middleware/validateRecaptcha");
 
 // create a new anonymous grievance
-router.post("/", createAnonymousGrievance);
+router.post("/", vaildateRecaptcha, createAnonymousGrievance);
 
 // get details of a grievance using tracking id
-router.get("/:trackingId", getAnonymousGrievance);
+router.get("/:trackingId", vaildateRecaptcha, getAnonymousGrievance);
 
 // get details of a grievance using id
 router.get("/id/:grievanceId", getAnonymousGrievance);
