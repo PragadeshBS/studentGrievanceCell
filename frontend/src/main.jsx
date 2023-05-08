@@ -32,6 +32,7 @@ import StudentGrievanceCards from "./components/grievance/student/StudentGrievan
 import StaffGrievanceDetails from "./components/grievance/staff/StaffGrievanceDetails";
 import StaffRegisterSuccess from "./pages/auth/register/StaffRegisterSuccess";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import About from "./pages/About";
 // react tool-tip css
 import "react-tooltip/dist/react-tooltip.css";
 
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <HomePage /> },
+      { path: "about", element: <About /> },
       {
         path: "anonymous",
         children: [

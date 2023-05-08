@@ -1,7 +1,9 @@
 import { BsChevronDoubleRight } from "react-icons/bs";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [showIcon, setShowIcon] = useState(false);
   return (
     <div>
@@ -18,6 +20,7 @@ const HomePage = () => {
             <button
               onMouseEnter={() => setShowIcon(true)}
               onMouseLeave={() => setShowIcon(false)}
+              onClick={() => navigate("/about")}
               className="cursor-pointer my-3 dark:bg-slate-600 dark:hover:bg-blue-700 bg-blue-700 hover:px-6 text-white text-lg font-bold p-4 rounded-full"
             >
               Learn more{" "}
@@ -40,7 +43,7 @@ const HomePage = () => {
             </div>
             <div>
               <ul className="list-disc">
-                <li>Analytics and Insights</li>
+                <li>Anonymous</li>
                 <li>Available 24/7</li>
               </ul>
             </div>
