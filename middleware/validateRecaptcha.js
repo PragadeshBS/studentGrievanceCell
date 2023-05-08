@@ -16,6 +16,7 @@ const vaildateRecaptcha = async (req, res, next) => {
       req.body.recaptchaToken || req.headers.recaptchatoken
     );
     formData.append("remoteip", requestIp.getClientIp(req));
+    console.log("captcha ip", requestIp.getClientIp(req));
     const recaptchRes = await fetch(
       "https://www.google.com/recaptcha/api/siteverify",
       {
