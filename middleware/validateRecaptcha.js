@@ -27,6 +27,7 @@ const vaildateRecaptcha = async (req, res, next) => {
       }
     );
     const recaptchaJson = await recaptchRes.json();
+    console.log("recaptchaResponse", recaptchaJson);
     if (!recaptchaJson.success) {
       return res.status(400).json({
         success: false,
