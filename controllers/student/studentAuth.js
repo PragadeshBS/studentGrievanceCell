@@ -72,6 +72,16 @@ const register = async (req, res) => {
       student,
     });
   } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: err.keyPattern.phone
+          ? "Phone number already exists"
+          : err.keyPattern.email
+          ? "Email already exists"
+          : "Register number already exists",
+      });
+    }
     console.log(err);
     res.status(500).json({
       success: false,

@@ -222,7 +222,14 @@ const StudentRegister = () => {
               </p>
             )}
           </div>
-          {errorMsg && <p role="alert">{errorMsg}</p>}
+          {errorMsg && (
+            <p
+              role="alert"
+              className="my-2 text-sm text-red-600 dark:text-red-500"
+            >
+              {errorMsg}
+            </p>
+          )}
           <div className="mb-6">
             {loading ? (
               <ClipLoaderWithText text={"Registering"} />
