@@ -58,7 +58,8 @@ const getStudentGrievances = async (req, res) => {
       .populate("grievanceStatus", "title")
       .populate("grievanceType", "name")
       .populate("staffAssigned", ["name", "designation"])
-      .populate("student", ["name", "registerNo"]);
+      .populate("student", ["name", "registerNo"])
+      .sort({ updatedAt: -1 });
     res.status(200).json({
       success: true,
       message: "Grievances fetched successfully",
@@ -82,7 +83,8 @@ const getStaffGrievances = async (req, res) => {
       .populate("grievanceStatus", "title")
       .populate("grievanceType", "name")
       .populate("staffAssigned", ["name", "designation"])
-      .populate("student", ["name", "registerNo"]);
+      .populate("student", ["name", "registerNo"])
+      .sort({ updatedAt: -1 });
     res.status(200).json({
       success: true,
       message: "Grievances fetched successfully",
@@ -105,7 +107,8 @@ const getAssignedAnonymousGrievances = async (req, res) => {
     })
       .populate("grievanceStatus", "title")
       .populate("grievanceType", "name")
-      .populate("staffAssigned", ["name", "designation"]);
+      .populate("staffAssigned", ["name", "designation"])
+      .sort({ updatedAt: -1 });
     res.status(200).json({
       success: true,
       message: "Grievances fetched successfully",

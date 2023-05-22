@@ -78,9 +78,9 @@ const StudentRegister = () => {
               placeholder="Register No."
               {...register("registerNo", {
                 required: "Register No. is required",
-                minLength: {
-                  value: 3,
-                  message: "Register No. must be at least 3 characters",
+                pattern: {
+                  value: /^[0-9]{10}$/i,
+                  message: "Register No. must be 10 characters",
                 },
               })}
             />

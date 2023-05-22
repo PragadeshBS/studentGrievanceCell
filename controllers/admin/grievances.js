@@ -16,7 +16,8 @@ const getAllGrievances = async (req, res) => {
         populate: { path: "department" },
       })
       .populate("grievanceStatus")
-      .populate("grievanceType");
+      .populate("grievanceType")
+      .sort({ updatedAt: -1 });
     res.status(200).json({
       success: true,
       message: "Grievances fetched successfully",
@@ -54,7 +55,8 @@ const getAllAnonymousGrievances = async (req, res) => {
     const grievances = await AnonymousGrievance.find()
       .populate("staffAssigned")
       .populate("grievanceStatus")
-      .populate("grievanceType");
+      .populate("grievanceType")
+      .sort({ updatedAt: -1 });
     res.status(200).json({
       success: true,
       message: "Grievances fetched successfully",
