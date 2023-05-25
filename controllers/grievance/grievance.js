@@ -43,7 +43,7 @@ const addGrievance = async (req, res) => {
         console.log("Node mailer ready to  is ready to send mails");
       }
     });
-    transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
     console.log(
       "Mail sent from" + process.env.MAIL_USERNAME + "to" + staffEmail
     );
