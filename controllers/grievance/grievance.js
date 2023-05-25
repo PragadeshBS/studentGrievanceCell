@@ -34,7 +34,18 @@ const addGrievance = async (req, res) => {
       html: `<h1>Student Grievance Cell, Madras Institute of Technology</h1><p>A new grievance has been assigned to you.</p><p><b>Title:</b> ${grievance.title}</p><p><b>Description:</b> ${grievance.description}</p><p>
       <a href="${process.env.WEB_URL}/staff/grievances/view/assigned/${grievance._id}">More info</a>`,
     };
+    // verify connection configuration
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Node mailer ready to  is ready to send mails");
+      }
+    });
     transporter.sendMail(mailOptions);
+    console.log(
+      "Mail sent from" + process.env.MAIL_USERNAME + "to" + staffEmail
+    );
     res.status(201).json({
       success: true,
       message: "Grievance created successfully",
