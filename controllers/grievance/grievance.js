@@ -37,6 +37,7 @@ const addGrievance = async (req, res) => {
     // verify connection configuration
     transporter.verify(function (error, success) {
       if (error) {
+        console.log("Something went wrong");
         console.log(error);
       } else {
         console.log("Node mailer ready to  is ready to send mails");
