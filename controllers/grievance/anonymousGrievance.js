@@ -14,6 +14,38 @@ const createAnonymousGrievance = async (req, res) => {
       staffAssigned,
       trackingId,
     });
+    const staffEmail = (
+      await Staff.findOne({
+        _id: staffAssigned,
+      }).select("email")
+    )["email"];
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PWD,
+      },
+    });
+    var mailOptions = {
+      from: process.env.MAIL_USERNAME,
+      to: staffEmail,
+      subject: "New Grievance assigned to you",
+      html: `<h1>Student Grievance Cell, Madras Institute of Technology</h1><p>A new grievance has been assigned to you.</p><p><b>Title:</b> ${grievance.title}</p><p><b>Description:</b> ${grievance.description}</p><p>
+      <a href="${process.env.WEB_URL}/staff/grievances/view/assigned/${grievance._id}">More info</a>`,
+    };
+    // verify connection configuration
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log("Something went wrong");
+        console.log(error);
+      } else {
+        console.log("Node mailer ready to  is ready to send mails");
+      }
+    });
+    await transporter.sendMail(mailOptions);
+    console.log(
+      "Mail sent from" + process.env.MAIL_USERNAME + "to" + staffEmail
+    );
     res.status(201).json({
       success: true,
       message: "Grievance created successfully",
